@@ -3,10 +3,29 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="public/styles/main.css" />
+        <link rel="stylesheet" href="public/styles/login.css" />
         <title>Login</title>
     </head>
     <body>
-        <h1>Login</h1>
+        <form action="">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" placeholder="Twój email" />
+            </div>
+            <div class="input-group">
+                <label for="password">Hasło</label>
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="Twoje hasło"
+                />
+            </div>
+            <div class="form-button">
+                <button class="form-button-submit" type="submit">
+                    Zatwierdź
+                </button>
+                <button class="form-button-reset" type="reset">Wyczyść</button>
+            </div>
+        </form>
     </body>
 </html>
