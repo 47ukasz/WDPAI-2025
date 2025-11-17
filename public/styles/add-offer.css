@@ -1,0 +1,76 @@
+.offer-content {
+  margin-top: 2rem;
+}
+
+.offer-content .btn {
+  width: 100%;
+  margin-top: 2.5rem;
+}
+
+.input-box-file > label {
+  font-size: 1.5rem;
+}
+
+.input-box-file > div {
+  position: relative;
+  padding: 2rem;
+  border: 1px dashed var(--light-gray);
+  border-radius: 1rem;
+  width: 100%;
+  height: 25rem;
+  margin-top: 2rem;
+}
+
+.input-box-file > div > input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.file-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--gray);
+}
+
+.file-placeholder p > span {
+  font-weight: bold;
+}
+
+.file-placeholder p {
+  margin-top: 2rem;
+}
+
+@media (min-width: 1200px) {
+  .offer-content form,
+  .offer-content-box {
+    display: flex;
+    justify-content: space-between;
+    gap: 5rem;
+  }
+
+  .offer-content-box .input-box {
+    width: 50%;
+  }
+
+  .container-box-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32rem;
+  }
+
+  .offer-content .btn {
+    width: 40%;
+    align-self: end;
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,55 @@
+.btn-offer {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.btn-offer i {
+  margin-right: 1rem;
+}
+
+.items-list {
+  margin: 1.5rem 0;
+  list-style: none;
+}
+
+.items-list li {
+  display: inline-block;
+  padding: 1rem 0 2.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.item-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.item-description,
+.item-price {
+  font-size: 1.8rem;
+}
+
+.item-price {
+  font-weight: bold;
+  color: var(--orange);
+}
+
+.item-buttons {
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.item-description {
+  margin: 2rem 0;
+}
+
+.btn {
+  padding: 1.7rem 2rem;
+}
+
+.btn-edit i,
+.btn-delete i {
+  margin-right: 1rem;
+}
