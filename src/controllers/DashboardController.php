@@ -1,12 +1,11 @@
 <?php
 
-require_once 'AppController.php';
+require_once __DIR__ . '/AppController.php';
+require_once __DIR__ . '/../repository/UserRepository.php';
 
-class DashboardConroller extends AppController {
+class DashboardController extends AppController {
+    public function index(?int $id = null) {
 
-
-    public function index(?int $id ) {
-        // TODO wyswietli wszystkie projekty z bazy danych
         $cards = [
             [
                 'id' => 1,
@@ -42,8 +41,27 @@ class DashboardConroller extends AppController {
                 'subtitle' => 'Lucky draw',
                 'imageUrlPath' => 'https://deckofcardsapi.com/static/img/0H.png',
                 'href' => '/cards/ten-of-hearts'
-            ] 
+            ]
         ];
+
+        $selectedCard = null;
+
+        if ($id !== null) {
+            foreach ($cards as $card) {
+                if ($card['id'] === $id) {
+                    $selectedCard = $card;
+                    break;
+                }
+            }
+
+            if (!$selectedCard) {
+                return $this->render("404"); // lub komunikat
+            }
+
+            return $this->render('single-card', ['card' => $selectedCard]);
+        }
+
+        // bez ID → normalne wyświetlanie całej listy
         return $this->render('dashboard', ['cards' => $cards]);
     }
 }

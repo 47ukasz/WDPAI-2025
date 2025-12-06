@@ -1,5 +1,5 @@
-const loginBtn = document.querySelector("#login-btn");
+// const loginBtn = document.querySelector("#login-btn");
 
-loginBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-});
+// loginBtn.addEventListener("click", (e) => {
+//   e.preventDefault();
+// });

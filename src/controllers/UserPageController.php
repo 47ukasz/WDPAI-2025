@@ -1,6 +1,6 @@
 <?php
 
-require_once 'AppController.php';
+require_once __DIR__ . '/AppController.php';
 
 class UserPageController extends AppController {
     public function index() {
