@@ -4,6 +4,9 @@ require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/AddOfferController.php';
 require_once 'src/controllers/UserPageController.php';
 require_once 'src/controllers/DashboardController.php';
+require_once 'src/controllers/HomeController.php';
+require_once 'src/controllers/AdminController.php';
+require_once 'src/controllers/ItemController.php';
 
 #TODO Controllery -> singleton
 
@@ -15,8 +18,10 @@ class Routing {
         'dashboard'=> ['controller' => 'DashboardController', 'action' => 'index'],
         'add-offer'=> ['controller' => 'AddOfferController', 'action' => 'index'],
         'user-page'=> ['controller' => 'UserPageController', 'action' => 'index'],
-        'register'=> ['controller' => 'SecurityController', 'action' => 'register']
-
+        'register'=> ['controller' => 'SecurityController', 'action' => 'register'],
+        'home'=> ['controller' => 'HomeController', 'action' => 'index'],
+        'admin'=> ['controller' => 'AdminController', 'action' => 'index'],
+        'item'=> ['controller' => 'ItemController', 'action' => 'index']
     ];
 
     // public static function run(string $path) {

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel administratora</title>
+    <link rel="stylesheet" href="public/styles/main.css" />
+    <link rel="stylesheet" href="public/styles/user-page.css" />
+    <link rel="stylesheet" href="public/styles/home.css" />
+    <link rel="stylesheet" href="public/styles/admin.css" />
+    <script
+      src="https://kit.fontawesome.com/cf24175f1e.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="public/scripts/main.js" defer></script>
+  </head>
+  <body>
+    <div class="nav-mobile">
+      <button class="nav-back-btn">
+        <i
+          class="fa-solid fa-arrow-left-long fa-2xl"
+          style="color: #78c841"
+        ></i>
+      </button>
+
+      <nav>
+        <div class="nav-box">
+          <a href="#">
+            <img
+              class="logo"
+              src="public/images/logo.png"
+              alt="Logo aplikacji"
+            />
+          </a>
+        </div>
+        <div class="nav-box">
+          <ul class="nav-list">
+            <li>Lista ogłoszeń</li>
+            <li>Dodaj ogłoszenie</li>
+          </ul>
+        </div>
+        <div class="nav-box nav-box-buttons">
+          <button class="btn btn-primary">Wyloguj</button>
+          <a href="#">
+            <img
+              class="avatar"
+              src="public/images/avatar.png"
+              alt="Awatar użytkownika"
+            />
+          </a>
+        </div>
+      </nav>
+    </div>
+    <div class="container">
+      <nav class="nav">
+        <div class="nav-box">
+          <a href="#">
+            <img
+              class="logo"
+              src="public/images/logo.png"
+              alt="Logo aplikacji"
+            />
+          </a>
+        </div>
+        <div class="nav-box">
+          <button class="nav-menu">
+            <i class="fa-solid fa-bars fa-2xl" style="color: #78c841"></i>
+          </button>
+        </div>
+      </nav>
+      <main>
+        <div class="heading-box">
+          <h1 class="header">Panel administratora</h1>
+          <p class="header-info">Lista Użytkowników</p>
+        </div>
+        <div class="searchbar">
+          <form class="search" action="">
+            <div class="input-box">
+              <label>Czego szukasz?</label>
+              <input type="text" placeholder="Wprowadź nazwę użytkownika" />
+            </div>
+            <div class="searchbar-btn">
+              <button class="btn btn-search">Szukaj</button>
+              <button class="btn btn-reset">
+                <i class="fa-solid fa-xmark fa-2xl" style="color: #ff9b2f"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <section>
+          <p class="admin-panel-mobile">
+            Lista użytkowników nie jest obsługiwana w wersji mobilnej.
+          </p>
+          <div class="admin-panel">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nazwa użytkownika</th>
+                  <th>Email</th>
+                  <th>Data rejestracji</th>
+                  <th>Akcje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Jan Kowalski</td>
+                  <td>jan.kowalski@example.com</td>
+                  <td>2025-01-15</td>
+                  <td>
+                    <button class="delete-btn">
+                      <i
+                        class="fa-solid fa-trash fa-xl"
+                        style="color: #fb4141"
+                      ></i>
+                      <i
+                        class="fa-solid fa-trash fa-2xl"
+                        style="color: #fb4141"
+                      ></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Anna Nowak</td>
+                  <td>anna.nowak@example.com</td>
+                  <td>2025-02-25</td>
+                  <td>
+                    <button class="delete-btn">
+                      <i
+                        class="fa-solid fa-trash fa-xl"
+                        style="color: #fb4141"
+                      ></i>
+                      <i
+                        class="fa-solid fa-trash fa-2xl"
+                        style="color: #fb4141"
+                      ></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Cristiano Ronaldo</td>
+                  <td>cristiano.ronaldo@example.com</td>
+                  <td>2025-04-05</td>
+                  <td>
+                    <button class="delete-btn">
+                      <i
+                        class="fa-solid fa-trash fa-xl"
+                        style="color: #fb4141"
+                      ></i>
+                      <i
+                        class="fa-solid fa-trash fa-2xl"
+                        style="color: #fb4141"
+                      ></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Peter Parker</td>
+                  <td>peter.parker@example.com</td>
+                  <td>2025-10-12</td>
+                  <td>
+                    <button class="delete-btn">
+                      <i
+                        class="fa-solid fa-trash fa-xl"
+                        style="color: #fb4141"
+                      ></i>
+                      <i
+                        class="fa-solid fa-trash fa-2xl"
+                        style="color: #fb4141"
+                      ></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Tony Stark</td>
+                  <td>tony.stark@example.com</td>
+                  <td>2025-03-18</td>
+                  <td>
+                    <button class="delete-btn">
+                      <i
+                        class="fa-solid fa-trash fa-xl"
+                        style="color: #fb4141"
+                      ></i>
+                      <i
+                        class="fa-solid fa-trash fa-2xl"
+                        style="color: #fb4141"
+                      ></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
+          <div class="pagination-menu">
+            <button>
+              <i class="fa-solid fa-angle-left fa-2xl" style="color: #000"></i>
+            </button>
+            <ul class="pagination-list">
+              <li class="selected">1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>...</li>
+              <li>10</li>
+            </ul>
+            <button>
+              <i class="fa-solid fa-angle-right fa-2xl" style="color: #000"></i>
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <footer></footer>
+    </div>
+  </body>
+</html>

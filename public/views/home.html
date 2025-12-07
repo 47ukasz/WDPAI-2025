@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Strona główna</title>
     <link rel="stylesheet" href="public/styles/main.css" />
     <link rel="stylesheet" href="public/styles/user-page.css" />
+    <link rel="stylesheet" href="public/styles/home.css" />
     <script
       src="https://kit.fontawesome.com/cf24175f1e.js"
       crossorigin="anonymous"
@@ -68,11 +69,21 @@
       </nav>
       <main>
         <div class="heading-box">
-          <h1 class="header">Moje ogłoszenia</h1>
-          <button class="btn btn-primary btn-offer">
-            <i class="fa-solid fa-plus" style="color: #ffffff"></i>
-            Dodaj nowe ogłoszenie
-          </button>
+          <h1 class="header">Znajdź to, czego szukasz</h1>
+        </div>
+        <div class="searchbar">
+          <form class="search" action="">
+            <div class="input-box">
+              <label>Czego szukasz?</label>
+              <input type="text" placeholder="np. rower górski" />
+            </div>
+            <div class="searchbar-btn">
+              <button class="btn btn-search">Szukaj</button>
+              <button class="btn btn-reset">
+                <i class="fa-solid fa-xmark fa-2xl" style="color: #ff9b2f"></i>
+              </button>
+            </div>
+          </form>
         </div>
         <section>
           <ul class="items-list">
@@ -94,23 +105,10 @@
                     świetnie dopasowuje się do sylwetki. Stan bardzo dobry –
                     zadbana skóra.
                   </p>
-                  <p class="item-price">450 PLN</p>
-                </div>
-                <div class="item-buttons">
-                  <button class="btn btn-edit">
-                    <i
-                      class="fa-solid fa-pen fa-2xl"
-                      style="color: #ffffff"
-                    ></i>
-                    Edytuj
-                  </button>
-                  <button class="btn btn-delete">
-                    <i
-                      class="fa-solid fa-trash fa-2xl"
-                      style="color: #ffffff"
-                    ></i>
-                    Usuń
-                  </button>
+                  <div class="item-info">
+                    <p class="item-price">450 PLN</p>
+                    <p class="item-number">+48 123 456 780</p>
+                  </div>
                 </div>
               </div>
             </li>
@@ -134,23 +132,10 @@
                     Świetnie nadaje się do treningów i dłuższych tras. Stan
                     bardzo dobry – gotowy do jazdy.
                   </p>
-                  <p class="item-price">2 300 PLN</p>
-                </div>
-                <div class="item-buttons">
-                  <button class="btn btn-edit">
-                    <i
-                      class="fa-solid fa-pen fa-2xl"
-                      style="color: #ffffff"
-                    ></i>
-                    Edytuj
-                  </button>
-                  <button class="btn btn-delete">
-                    <i
-                      class="fa-solid fa-trash fa-2xl"
-                      style="color: #ffffff"
-                    ></i>
-                    Usuń
-                  </button>
+                  <div class="item-info">
+                    <p class="item-price">2300 PLN</p>
+                    <p class="item-number">+48 123 456 780</p>
+                  </div>
                 </div>
               </div>
             </li>
@@ -173,23 +158,10 @@
                     Idealny na uczelnię, do biura lub na codzienne wyjścia. Stan
                     jak nowy.
                   </p>
-                  <p class="item-price">120.99 PLN</p>
-                </div>
-                <div class="item-buttons">
-                  <button class="btn btn-edit">
-                    <i
-                      class="fa-solid fa-pen fa-2xl"
-                      style="color: #ffffff"
-                    ></i>
-                    Edytuj
-                  </button>
-                  <button class="btn btn-delete">
-                    <i
-                      class="fa-solid fa-trash fa-2xl"
-                      style="color: #ffffff"
-                    ></i>
-                    Usuń
-                  </button>
+                  <div class="item-info">
+                    <p class="item-price">129.99 PLN</p>
+                    <p class="item-number">+48 123 456 780</p>
+                  </div>
                 </div>
               </div>
             </li>
