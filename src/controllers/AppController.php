@@ -2,8 +2,7 @@
 
 class AppController {
 
-    protected function render(string $template = null, array $variables = [])
-    {
+    protected function render(string $template = null, array $variables = []) {
         $templatePath = 'public/views/'. $template.'.html';
         $templatePath404 = 'public/views/404.html';
         $output = "";
@@ -20,6 +19,18 @@ class AppController {
             $output = ob_get_clean();
         }
         echo $output;
+    }
+
+    protected function requireLogin() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (empty($_SESSION['user_id'])) {
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/login");
+            exit();
+        }
     }
 
     protected function isGet(): bool
