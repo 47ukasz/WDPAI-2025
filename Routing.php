@@ -21,29 +21,16 @@ class Routing {
         'register'=> ['controller' => 'SecurityController', 'action' => 'register'],
         'home'=> ['controller' => 'HomeController', 'action' => 'index'],
         'admin'=> ['controller' => 'AdminController', 'action' => 'index'],
-        'item'=> ['controller' => 'ItemController', 'action' => 'index']
+        'item'=> ['controller' => 'ItemController', 'action' => 'index'],
+        'search-cards'=> ['controller' => 'DashboardController', 'action' => 'search']
     ];
 
-    // public static function run(string $path) {
-    //     switch($path){
-    //         case 'login':
-    //         case 'register':
-    //         case 'add-offer':
-    //         case 'user-page':
-    //         case 'dashboard':
-    //             $controller = self::$routes[$path]['controller'];
-    //             $action = self::$routes[$path]['action'];
-
-    //             $controllerObj = new $controller();
-    //             $controllerObj->$action();
-    //             break;
-    //         default:
-    //             include "public/views/404.html";
-    //             break;
-    //     }
-    // }
-
     public static function run(string $path) {
+        // trzeba regex dać
+        // singleton do repository, bazy danych oraz wlasnie routing
+        // IN_ARRAY($path, Routing::$routes)
+
+
         if (!isset(self::$routes[$path])) {
             include "public/views/404.html";
             return;
