@@ -25,7 +25,7 @@
 
       <nav>
         <div class="nav-box">
-          <a href="#">
+          <a href="/home">
             <img
               class="logo"
               src="public/images/logo.png"
@@ -35,13 +35,24 @@
         </div>
         <div class="nav-box">
           <ul class="nav-list">
-            <li>Lista ogłoszeń</li>
-            <li>Dodaj ogłoszenie</li>
+            <?php foreach ($nav_items as $item): ?>
+            <li>
+              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
+            </li>
+            <?php endforeach; ?>
           </ul>
         </div>
+        <?php if (!$logged_in): ?>
         <div class="nav-box nav-box-buttons">
-          <button class="btn btn-primary">Wyloguj</button>
-          <a href="#">
+          <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
+          <a href="/register" class="btn btn-primary btn-register"
+            >Rejestracja</a
+          >
+        </div>
+        <? else: ?>
+        <div class="nav-box nav-box-buttons">
+          <a href="/logout" class="btn btn-primary">Wyloguj</a>
+          <a href="/user-page">
             <img
               class="avatar"
               src="public/images/avatar.png"
@@ -49,20 +60,47 @@
             />
           </a>
         </div>
+        <?php endif; ?>
       </nav>
     </div>
     <div class="container">
       <nav class="nav">
         <div class="nav-box">
-          <a href="#">
+          <a href="/home">
             <img
               class="logo"
               src="public/images/logo.png"
               alt="Logo aplikacji"
             />
           </a>
+          <ul class="nav-list-desktop">
+            <?php foreach ($nav_items as $item): ?>
+            <li>
+              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
+            </li>
+            <?php endforeach; ?>
+          </ul>
         </div>
         <div class="nav-box">
+          <?php if (!$logged_in): ?>
+          <div class="nav-box-desktop">
+            <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
+            <a href="/register" class="btn btn-primary btn-register"
+              >Rejestracja</a
+            >
+          </div>
+          <? else: ?>
+          <div class="nav-box-desktop">
+            <a href="/logout" class="btn btn-primary">Wyloguj</a>
+            <a href="/user-page">
+              <img
+                class="avatar"
+                src="public/images/avatar.png"
+                alt="Awatar użytkownika"
+              />
+            </a>
+          </div>
+          <?php endif; ?>
           <button class="nav-menu">
             <i class="fa-solid fa-bars fa-2xl" style="color: #78c841"></i>
           </button>

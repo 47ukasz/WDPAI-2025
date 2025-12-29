@@ -13,8 +13,22 @@
       crossorigin="anonymous"
     ></script>
     <script src="public/scripts/main.js" defer></script>
+    <script src="public/scripts/modal-admin.js" defer></script>
   </head>
   <body>
+    <div class="background">
+      <div class="modal">
+        <p class="modal-title">
+          Czy na pewno chcesz usunąć użytkownika "<span></span>"?
+        </p>
+        <form action="offer-delete" method="post" class="modal-form">
+          <input type="text" hidden id="modal-input" />
+
+          <button class="btn btn-reset" type="button">Anuluj</button>
+          <button class="btn btn-primary" type="submit">Potwierdź</button>
+        </form>
+      </div>
+    </div>
     <div class="nav-mobile">
       <button class="nav-back-btn">
         <i
@@ -25,7 +39,7 @@
 
       <nav>
         <div class="nav-box">
-          <a href="#">
+          <a href="/home">
             <img
               class="logo"
               src="public/images/logo.png"
@@ -35,13 +49,24 @@
         </div>
         <div class="nav-box">
           <ul class="nav-list">
-            <li>Lista ogłoszeń</li>
-            <li>Dodaj ogłoszenie</li>
+            <?php foreach ($nav_items as $item): ?>
+            <li>
+              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
+            </li>
+            <?php endforeach; ?>
           </ul>
         </div>
+        <?php if (!$logged_in): ?>
         <div class="nav-box nav-box-buttons">
-          <button class="btn btn-primary">Wyloguj</button>
-          <a href="#">
+          <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
+          <a href="/register" class="btn btn-primary btn-register"
+            >Rejestracja</a
+          >
+        </div>
+        <? else: ?>
+        <div class="nav-box nav-box-buttons">
+          <a href="/logout" class="btn btn-primary">Wyloguj</a>
+          <a href="/user-page">
             <img
               class="avatar"
               src="public/images/avatar.png"
@@ -49,20 +74,47 @@
             />
           </a>
         </div>
+        <?php endif; ?>
       </nav>
     </div>
     <div class="container">
       <nav class="nav">
         <div class="nav-box">
-          <a href="#">
+          <a href="/home">
             <img
               class="logo"
               src="public/images/logo.png"
               alt="Logo aplikacji"
             />
           </a>
+          <ul class="nav-list-desktop">
+            <?php foreach ($nav_items as $item): ?>
+            <li>
+              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
+            </li>
+            <?php endforeach; ?>
+          </ul>
         </div>
         <div class="nav-box">
+          <?php if (!$logged_in): ?>
+          <div class="nav-box-desktop">
+            <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
+            <a href="/register" class="btn btn-primary btn-register"
+              >Rejestracja</a
+            >
+          </div>
+          <? else: ?>
+          <div class="nav-box-desktop">
+            <a href="/logout" class="btn btn-primary">Wyloguj</a>
+            <a href="/user-page">
+              <img
+                class="avatar"
+                src="public/images/avatar.png"
+                alt="Awatar użytkownika"
+              />
+            </a>
+          </div>
+          <?php endif; ?>
           <button class="nav-menu">
             <i class="fa-solid fa-bars fa-2xl" style="color: #78c841"></i>
           </button>
@@ -73,6 +125,7 @@
           <h1 class="header">Panel administratora</h1>
           <p class="header-info">Lista Użytkowników</p>
         </div>
+        <?php if (count($users) >0): ?>
         <div class="searchbar">
           <form class="search" action="">
             <div class="input-box">
@@ -87,11 +140,13 @@
             </div>
           </form>
         </div>
+        <?php endif; ?>
 
         <section>
           <p class="admin-panel-mobile">
             Lista użytkowników nie jest obsługiwana w wersji mobilnej.
           </p>
+          <?php if (count($users) >0): ?>
           <div class="admin-panel">
             <table>
               <thead>
@@ -104,13 +159,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Jan Kowalski</td>
-                  <td>jan.kowalski@example.com</td>
+                <?php foreach ($users as $user): ?>
+                <tr data-id="<?= $user->getId(); ?>">
+                  <td><?= $user->getId(); ?></td>
+                  <td id="full-name"><?= $user->getFullName(); ?></td>
+                  <td><?= $user->getEmail(); ?></td>
                   <td>2025-01-15</td>
                   <td>
-                    <button class="delete-btn">
+                    <button class="delete-btn modal-trigger">
                       <i
                         class="fa-solid fa-trash fa-xl"
                         style="color: #fb4141"
@@ -122,78 +178,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Anna Nowak</td>
-                  <td>anna.nowak@example.com</td>
-                  <td>2025-02-25</td>
-                  <td>
-                    <button class="delete-btn">
-                      <i
-                        class="fa-solid fa-trash fa-xl"
-                        style="color: #fb4141"
-                      ></i>
-                      <i
-                        class="fa-solid fa-trash fa-2xl"
-                        style="color: #fb4141"
-                      ></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Cristiano Ronaldo</td>
-                  <td>cristiano.ronaldo@example.com</td>
-                  <td>2025-04-05</td>
-                  <td>
-                    <button class="delete-btn">
-                      <i
-                        class="fa-solid fa-trash fa-xl"
-                        style="color: #fb4141"
-                      ></i>
-                      <i
-                        class="fa-solid fa-trash fa-2xl"
-                        style="color: #fb4141"
-                      ></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Peter Parker</td>
-                  <td>peter.parker@example.com</td>
-                  <td>2025-10-12</td>
-                  <td>
-                    <button class="delete-btn">
-                      <i
-                        class="fa-solid fa-trash fa-xl"
-                        style="color: #fb4141"
-                      ></i>
-                      <i
-                        class="fa-solid fa-trash fa-2xl"
-                        style="color: #fb4141"
-                      ></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>Tony Stark</td>
-                  <td>tony.stark@example.com</td>
-                  <td>2025-03-18</td>
-                  <td>
-                    <button class="delete-btn">
-                      <i
-                        class="fa-solid fa-trash fa-xl"
-                        style="color: #fb4141"
-                      ></i>
-                      <i
-                        class="fa-solid fa-trash fa-2xl"
-                        style="color: #fb4141"
-                      ></i>
-                    </button>
-                  </td>
-                </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>
@@ -217,6 +202,7 @@
             </button>
           </div>
         </section>
+        <?php endif; ?>
       </main>
 
       <footer></footer>

@@ -1,82 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="public/styles/main.css" />
-        <link rel="stylesheet" href="public/styles/login.css" />
-        <title>Login</title>
-        <script src="public/scripts/login.js" defer></script>
-    </head>
-    <body>
-        <div class="container container-login">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="public/styles/main.css" />
+    <link rel="stylesheet" href="public/styles/login.css" />
+    <title>Stwórz konto</title>
+    <script
+      type="module"
+      src="public/scripts/validation-register.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div class="container container-login">
+      <div class="container-box">
+        <h1 class="header header-login">Witaj w Sprzedaj.TO!</h1>
+        <p class="text-muted text-muted-login">Stwórz konto aby kontynuować</p>
+      </div>
+      <div class="container-box">
+        <form action="\register" method="POST">
+          <div class="input-box">
+            <label for="email">Adres e-mail</label>
+            <input
+              name="email"
+              type="text"
+              id="email"
+              placeholder="Wpisz swój adres e-mail"
+            />
+          </div>
+          <div class="input-box">
+            <label for="userName">Imię</label>
+            <input
+              name="userName"
+              type="text"
+              id="userName"
+              placeholder="Wpisz swoje imię"
+            />
+          </div>
+          <div class="input-box">
+            <label for="surname">Nazwisko</label>
+            <input
+              name="surname"
+              type="text"
+              id="surname"
+              placeholder="Wpisz swoje nazwisko"
+            />
+          </div>
+          <div class="input-box">
+            <label for="password">Hasło</label>
+            <input
+              name="password"
+              type="password"
+              id="password"
+              placeholder="Wpisz swoje hasło"
+            />
+          </div>
+          <div class="input-box">
+            <label for="repeatPassword">Powtórz Hasło</label>
+            <input
+              name="repeatPassword"
+              type="password"
+              id="repeatPassword"
+              placeholder="Powtórz swoje hasło"
+            />
+          </div>
+          <ul class="form-validation">
             <?php if(isset($messages)): ?>
-                <p><?= $messages; ?></p>
+            <li><?= $messages; ?></li>
             <?php endif; ?>
-
-            <div class="container-box">
-                <h1 class="header header-login">Witaj w Sprzedaj.TO!</h1>
-                <p class="text-muted text-muted-login">
-                    Stwórz konto aby kontynuować
-                </p>
-            </div>
-            <div class="container-box">
-                <form action="\register" method="POST">
-                    <div class="input-box">
-                        <label for="email">Adres e-mail</label>
-                        <input
-                            name="email"
-                            type="text"
-                            id="email"
-                            placeholder="Wpisz swój adres e-mail"
-                        />
-                    </div>
-                    <div class="input-box">
-                        <label for="userName">Imię</label>
-                        <input
-                            name="userName"
-                            type="text"
-                            id="userName"
-                            placeholder="Wpisz swoje imię"
-                        />
-                    </div>
-                    <div class="input-box">
-                        <label for="surname">Nazwisko</label>
-                        <input
-                            name="surname"
-                            type="text"
-                            id="surname"
-                            placeholder="Wpisz swoje nazwisko"
-                        />
-                    </div>
-                    <div class="input-box">
-                        <label for="password">Hasło</label>
-                        <input
-                            name="password"
-                            type="password"
-                            id="password"
-                            placeholder="Wpisz swoje hasło"
-                        />
-                    </div>
-                    <div class="input-box">
-                        <label for="repeatPassword">Powtórz Hasło</label>
-                        <input
-                            name="repeatPassword"
-                            type="password"
-                            id="repeatPassword"
-                            placeholder="Powtórz swoje hasło"
-                        />
-                    </div>
-                    <div class="button-box">
-                        <button id="login-btn" class="btn btn-primary">
-                            Zaloguj się
-                        </button>
-                        <a href="register" class="btn btn-outline" role="button"
-                            >Zarejestruj się</a
-                        >
-                    </div>
-                </form>
-            </div>
-        </div>
-    </body>
+          </ul>
+          <div class="button-box">
+            <button id="login-btn" class="btn btn-primary">Stwórz konto</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>

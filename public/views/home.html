@@ -12,6 +12,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="public/scripts/main.js" defer></script>
+    <script src="public/scripts/home.js" defer></script>
   </head>
   <body>
     <div class="nav-mobile">
@@ -24,7 +25,7 @@
 
       <nav>
         <div class="nav-box">
-          <a href="#">
+          <a href="/home">
             <img
               class="logo"
               src="public/images/logo.png"
@@ -34,13 +35,24 @@
         </div>
         <div class="nav-box">
           <ul class="nav-list">
-            <li>Lista ogłoszeń</li>
-            <li>Dodaj ogłoszenie</li>
+            <?php foreach ($nav_items as $item): ?>
+            <li>
+              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
+            </li>
+            <?php endforeach; ?>
           </ul>
         </div>
+        <?php if (!$logged_in): ?>
         <div class="nav-box nav-box-buttons">
-          <button class="btn btn-primary">Wyloguj</button>
-          <a href="#">
+          <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
+          <a href="/register" class="btn btn-primary btn-register"
+            >Rejestracja</a
+          >
+        </div>
+        <? else: ?>
+        <div class="nav-box nav-box-buttons">
+          <a href="/logout" class="btn btn-primary">Wyloguj</a>
+          <a href="/user-page">
             <img
               class="avatar"
               src="public/images/avatar.png"
@@ -48,126 +60,74 @@
             />
           </a>
         </div>
+        <?php endif; ?>
       </nav>
     </div>
     <div class="container">
       <nav class="nav">
         <div class="nav-box">
-          <a href="#">
+          <a href="/home">
             <img
               class="logo"
               src="public/images/logo.png"
               alt="Logo aplikacji"
             />
           </a>
+          <ul class="nav-list-desktop">
+            <?php foreach ($nav_items as $item): ?>
+            <li>
+              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
+            </li>
+            <?php endforeach; ?>
+          </ul>
         </div>
         <div class="nav-box">
+          <?php if (!$logged_in): ?>
+          <div class="nav-box-desktop">
+            <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
+            <a href="/register" class="btn btn-primary btn-register"
+              >Rejestracja</a
+            >
+          </div>
+          <? else: ?>
+          <div class="nav-box-desktop">
+            <a href="/logout" class="btn btn-primary">Wyloguj</a>
+            <a href="/user-page">
+              <img
+                class="avatar"
+                src="public/images/avatar.png"
+                alt="Awatar użytkownika"
+              />
+            </a>
+          </div>
+          <?php endif; ?>
           <button class="nav-menu">
             <i class="fa-solid fa-bars fa-2xl" style="color: #78c841"></i>
           </button>
         </div>
       </nav>
+      <div class="heading-box">
+        <h1 class="header">Znajdź to, czego szukasz</h1>
+      </div>
+      <div class="searchbar">
+        <form class="search" action="">
+          <div class="input-box">
+            <label>Czego szukasz?</label>
+            <input type="text" placeholder="np. rower górski" />
+          </div>
+          <div class="searchbar-btn">
+            <button class="btn btn-search">Szukaj</button>
+            <button class="btn btn-reset">
+              <i class="fa-solid fa-xmark fa-2xl" style="color: #ff9b2f"></i>
+            </button>
+          </div>
+        </form>
+      </div>
       <main>
-        <div class="heading-box">
-          <h1 class="header">Znajdź to, czego szukasz</h1>
-        </div>
-        <div class="searchbar">
-          <form class="search" action="">
-            <div class="input-box">
-              <label>Czego szukasz?</label>
-              <input type="text" placeholder="np. rower górski" />
-            </div>
-            <div class="searchbar-btn">
-              <button class="btn btn-search">Szukaj</button>
-              <button class="btn btn-reset">
-                <i class="fa-solid fa-xmark fa-2xl" style="color: #ff9b2f"></i>
-              </button>
-            </div>
-          </form>
-        </div>
-        <section>
-          <ul class="items-list">
-            <li>
-              <img
-                class="item-photo"
-                src="public/images/jacket.png"
-                alt="Skórzana kurtka"
-              />
-              <div class="item-content">
-                <div>
-                  <p class="item-title">
-                    Brązowa kurtka skórzana – klasyczna i ponadczasowa
-                  </p>
-                  <p class="item-description">
-                    Modna, męska kurtka wykonana z brązowej skóry o naturalnym
-                    połysku. Posiada solidny zamek, wygodne kieszenie i
-                    ściągacze przy mankietach oraz pasie. Bardzo wygodna,
-                    świetnie dopasowuje się do sylwetki. Stan bardzo dobry –
-                    zadbana skóra.
-                  </p>
-                  <div class="item-info">
-                    <p class="item-price">450 PLN</p>
-                    <p class="item-number">+48 123 456 780</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <img
-                class="item-photo"
-                src="public/images/bicycle.png"
-                alt="Skórzana kurtka"
-              />
-              <div class="item-content">
-                <div>
-                  <p class="item-title">
-                    Czarny rower szosowy – lekki, sportowy, idealny do jazdy po
-                    asfalcie
-                  </p>
-                  <p class="item-description">
-                    Elegancki, matowy rower szosowy o lekkiej konstrukcji i
-                    aerodynamicznej ramie. Wyposażony w wygodne siodełko,
-                    kierownicę typu baranek oraz precyzyjny układ przerzutek.
-                    Świetnie nadaje się do treningów i dłuższych tras. Stan
-                    bardzo dobry – gotowy do jazdy.
-                  </p>
-                  <div class="item-info">
-                    <p class="item-price">2300 PLN</p>
-                    <p class="item-number">+48 123 456 780</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <img
-                class="item-photo"
-                src="public/images/backpack.png"
-                alt="Skórzana kurtka"
-              />
-              <div class="item-content">
-                <div>
-                  <p class="item-title">
-                    Czarny plecak do szkoły lub pracy – praktyczny, pojemny
-                  </p>
-                  <p class="item-description">
-                    Minimalistyczny plecak z główną komorą i przednią kieszenią
-                    na drobiazgi. Po bokach elastyczne kieszenie na butelkę lub
-                    parasolkę. Wygodne szelki i uchwyt do noszenia w ręce.
-                    Idealny na uczelnię, do biura lub na codzienne wyjścia. Stan
-                    jak nowy.
-                  </p>
-                  <div class="item-info">
-                    <p class="item-price">129.99 PLN</p>
-                    <p class="item-number">+48 123 456 780</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
+        <section class="items">
+          <ul class="items-list"></ul>
         </section>
-        <section>
+        <section class="pagination">
           <div class="pagination-menu">
             <button>
               <i class="fa-solid fa-angle-left fa-2xl" style="color: #000"></i>
@@ -184,6 +144,9 @@
               <i class="fa-solid fa-angle-right fa-2xl" style="color: #000"></i>
             </button>
           </div>
+        </section>
+        <section>
+          <div hidden id="spinner"></div>
         </section>
       </main>
 

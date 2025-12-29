@@ -1,58 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="public/styles/main.css" />
-        <link rel="stylesheet" href="public/styles/login.css" />
-        <title>Login</title>
-        <script src="public/scripts/login.js" defer></script>
-    </head>
-    <body>
-        <div class="container container-login">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="public/styles/main.css" />
+    <link rel="stylesheet" href="public/styles/login.css" />
+    <title>Login</title>
+    <script type="module" ="public/scripts/validation-login.js" defer></script>
+  </head>
+  <body>
+    <div class="container container-login">
+      <div class="container-box">
+        <h1 class="header header-login">Witaj z powrotem!</h1>
+        <p class="text-muted text-muted-login">Zaloguj się aby kontynuować</p>
+      </div>
+      <div class="container-box">
+        <form action="\login" method="POST">
+          <div class="input-box">
+            <label for="email">Adres e-mail</label>
+            <input
+              name="email"
+              type="text"
+              id="email"
+              placeholder="Wpisz swój adres e-mail"
+            />
+          </div>
+          <div class="input-box">
+            <label for="password">Hasło</label>
+            <input
+              name="password"
+              type="password"
+              id="password"
+              placeholder="Wpisz swoje hasło"
+            />
+          </div>
+          <ul class="form-validation">
             <?php if(isset($messages)): ?>
-            <p>
-                <?= $messages; ?>
-              </p>
-                <?php endif; ?>
-            </p>
-
-            <div class="container-box">
-                <h1 class="header header-login">Witaj z powrotem!</h1>
-                <p class="text-muted text-muted-login">
-                    Zaloguj się aby kontynuować
-                </p>
-            </div>
-            <div class="container-box">
-                <form action="\login" method="POST">
-                    <div class="input-box">
-                        <label for="email">Adres e-mail</label>
-                        <input
-                            name="email"
-                            type="text"
-                            id="email"
-                            placeholder="Wpisz swój adres e-mail"
-                        />
-                    </div>
-                    <div class="input-box">
-                        <label for="password">Hasło</label>
-                        <input
-                            name="password"
-                            type="password"
-                            id="password"
-                            placeholder="Wpisz swoje hasło"
-                        />
-                    </div>
-                    <div class="button-box">
-                        <button id="login-btn" class="btn btn-primary">
-                            Zaloguj się
-                        </button>
-                        <a href="register" class="btn btn-outline" role="button"
-                            >Zarejestruj się</a
-                        >
-                    </div>
-                </form>
-            </div>
-        </div>
-    </body>
+            <li><?= $messages; ?></li>
+            <?php endif; ?>
+          </ul>
+          <div class="button-box">
+            <button id="login-btn" class="btn btn-primary">Zaloguj się</button>
+            <a href="register" class="btn btn-outline" role="button"
+              >Zarejestruj się</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>

@@ -11,8 +11,22 @@
       crossorigin="anonymous"
     ></script>
     <script src="public/scripts/main.js" defer></script>
+    <script src="public/scripts/modal.js" defer></script>
   </head>
   <body>
+    <div class="background">
+      <div class="modal">
+        <p class="modal-title">
+          Czy na pewno chcesz usunąć ofertę "<span></span>"?
+        </p>
+        <form action="offer-delete" method="post" class="modal-form">
+          <input type="text" hidden id="modal-input" />
+
+          <button class="btn btn-reset" type="button">Anuluj</button>
+          <button class="btn btn-primary" type="submit">Potwierdź</button>
+        </form>
+      </div>
+    </div>
     <div class="nav-mobile">
       <button class="nav-back-btn">
         <i
@@ -23,7 +37,7 @@
 
       <nav>
         <div class="nav-box">
-          <a href="#">
+          <a href="/home">
             <img
               class="logo"
               src="public/images/logo.png"
@@ -33,13 +47,24 @@
         </div>
         <div class="nav-box">
           <ul class="nav-list">
-            <li>Lista ogłoszeń</li>
-            <li>Dodaj ogłoszenie</li>
+            <?php foreach ($nav_items as $item): ?>
+            <li>
+              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
+            </li>
+            <?php endforeach; ?>
           </ul>
         </div>
+        <?php if (!$logged_in): ?>
         <div class="nav-box nav-box-buttons">
-          <button class="btn btn-primary">Wyloguj</button>
-          <a href="#">
+          <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
+          <a href="/register" class="btn btn-primary btn-register"
+            >Rejestracja</a
+          >
+        </div>
+        <? else: ?>
+        <div class="nav-box nav-box-buttons">
+          <a href="/logout" class="btn btn-primary">Wyloguj</a>
+          <a href="/user-page">
             <img
               class="avatar"
               src="public/images/avatar.png"
@@ -47,20 +72,47 @@
             />
           </a>
         </div>
+        <?php endif; ?>
       </nav>
     </div>
     <div class="container">
       <nav class="nav">
         <div class="nav-box">
-          <a href="#">
+          <a href="/home">
             <img
               class="logo"
               src="public/images/logo.png"
               alt="Logo aplikacji"
             />
           </a>
+          <ul class="nav-list-desktop">
+            <?php foreach ($nav_items as $item): ?>
+            <li>
+              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
+            </li>
+            <?php endforeach; ?>
+          </ul>
         </div>
         <div class="nav-box">
+          <?php if (!$logged_in): ?>
+          <div class="nav-box-desktop">
+            <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
+            <a href="/register" class="btn btn-primary btn-register"
+              >Rejestracja</a
+            >
+          </div>
+          <? else: ?>
+          <div class="nav-box-desktop">
+            <a href="/logout" class="btn btn-primary">Wyloguj</a>
+            <a href="/user-page">
+              <img
+                class="avatar"
+                src="public/images/avatar.png"
+                alt="Awatar użytkownika"
+              />
+            </a>
+          </div>
+          <?php endif; ?>
           <button class="nav-menu">
             <i class="fa-solid fa-bars fa-2xl" style="color: #78c841"></i>
           </button>
@@ -69,121 +121,52 @@
       <main>
         <div class="heading-box">
           <h1 class="header">Moje ogłoszenia</h1>
-          <button class="btn btn-primary btn-offer">
+          <a class="btn btn-primary btn-offer" href="/add-offer">
             <i class="fa-solid fa-plus" style="color: #ffffff"></i>
             Dodaj nowe ogłoszenie
-          </button>
+          </a>
         </div>
+        <?php if (!empty($items)): ?>
         <section>
           <ul class="items-list">
-            <li>
-              <img
-                class="item-photo"
-                src="public/images/jacket.png"
-                alt="Skórzana kurtka"
-              />
-              <div class="item-content">
-                <div>
-                  <p class="item-title">
-                    Brązowa kurtka skórzana – klasyczna i ponadczasowa
-                  </p>
-                  <p class="item-description">
-                    Modna, męska kurtka wykonana z brązowej skóry o naturalnym
-                    połysku. Posiada solidny zamek, wygodne kieszenie i
-                    ściągacze przy mankietach oraz pasie. Bardzo wygodna,
-                    świetnie dopasowuje się do sylwetki. Stan bardzo dobry –
-                    zadbana skóra.
-                  </p>
-                  <p class="item-price">450 PLN</p>
-                </div>
-                <div class="item-buttons">
-                  <button class="btn btn-edit">
-                    <i
-                      class="fa-solid fa-pen fa-2xl"
-                      style="color: #ffffff"
-                    ></i>
-                    Edytuj
-                  </button>
-                  <button class="btn btn-delete">
-                    <i
-                      class="fa-solid fa-trash fa-2xl"
-                      style="color: #ffffff"
-                    ></i>
-                    Usuń
-                  </button>
-                </div>
-              </div>
-            </li>
+            <?php foreach ($items as $item): ?>
+            <?php
+              $title = $item['title'] ?? '';
+              $description = $item['description'] ?? '';
+              $price = $item['price'] ?? 0;
+              $id = (int)($item['id'] ?? 0);
 
-            <li>
+              $photo = $item['photo_path'] ?? '';
+              $alt = $item['photo_alt'] ?? $title;
+            ?>
+            <li data-id="<?= $id ?>">
               <img
                 class="item-photo"
-                src="public/images/bicycle.png"
-                alt="Skórzana kurtka"
+                src="/public/<?= htmlspecialchars($photo) ?>"
+                alt="<?= htmlspecialchars($alt) ?>"
               />
-              <div class="item-content">
-                <div>
-                  <p class="item-title">
-                    Czarny rower szosowy – lekki, sportowy, idealny do jazdy po
-                    asfalcie
-                  </p>
-                  <p class="item-description">
-                    Elegancki, matowy rower szosowy o lekkiej konstrukcji i
-                    aerodynamicznej ramie. Wyposażony w wygodne siodełko,
-                    kierownicę typu baranek oraz precyzyjny układ przerzutek.
-                    Świetnie nadaje się do treningów i dłuższych tras. Stan
-                    bardzo dobry – gotowy do jazdy.
-                  </p>
-                  <p class="item-price">2 300 PLN</p>
-                </div>
-                <div class="item-buttons">
-                  <button class="btn btn-edit">
-                    <i
-                      class="fa-solid fa-pen fa-2xl"
-                      style="color: #ffffff"
-                    ></i>
-                    Edytuj
-                  </button>
-                  <button class="btn btn-delete">
-                    <i
-                      class="fa-solid fa-trash fa-2xl"
-                      style="color: #ffffff"
-                    ></i>
-                    Usuń
-                  </button>
-                </div>
-              </div>
-            </li>
 
-            <li>
-              <img
-                class="item-photo"
-                src="public/images/backpack.png"
-                alt="Skórzana kurtka"
-              />
               <div class="item-content">
                 <div>
-                  <p class="item-title">
-                    Czarny plecak do szkoły lub pracy – praktyczny, pojemny
-                  </p>
+                  <p class="item-title"><?= htmlspecialchars($title) ?></p>
                   <p class="item-description">
-                    Minimalistyczny plecak z główną komorą i przednią kieszenią
-                    na drobiazgi. Po bokach elastyczne kieszenie na butelkę lub
-                    parasolkę. Wygodne szelki i uchwyt do noszenia w ręce.
-                    Idealny na uczelnię, do biura lub na codzienne wyjścia. Stan
-                    jak nowy.
+                    <?= htmlspecialchars($description) ?>
                   </p>
-                  <p class="item-price">120.99 PLN</p>
+                  <p class="item-price">
+                    <?= htmlspecialchars($price) ?>
+                    PLN
+                  </p>
                 </div>
+
                 <div class="item-buttons">
-                  <button class="btn btn-edit">
+                  <a href="update-offer/<?= $id ?>" class="btn btn-edit">
                     <i
                       class="fa-solid fa-pen fa-2xl"
                       style="color: #ffffff"
                     ></i>
                     Edytuj
-                  </button>
-                  <button class="btn btn-delete">
+                  </a>
+                  <button class="btn btn-delete modal-trigger">
                     <i
                       class="fa-solid fa-trash fa-2xl"
                       style="color: #ffffff"
@@ -193,6 +176,7 @@
                 </div>
               </div>
             </li>
+            <?php endforeach; ?>
           </ul>
         </section>
         <section>
@@ -213,6 +197,9 @@
             </button>
           </div>
         </section>
+        <? else: ?>
+        <p class="no-items">Brak ogłoszeń do wyświetlenia.</p>
+        <?php endif; ?>
       </main>
 
       <footer></footer>

@@ -1,7 +1,6 @@
 <?php
 
 class AppController {
-
     protected function render(string $template = null, array $variables = []) {
         $templatePath = 'public/views/'. $template.'.html';
         $templatePath404 = 'public/views/404.html';
@@ -33,13 +32,41 @@ class AppController {
         }
     }
 
-    protected function isGet(): bool
-    {
+    protected function isGet(): bool {
         return $_SERVER["REQUEST_METHOD"] === 'GET';
     }
 
-    protected function isPost(): bool
-    {
+    protected function isPost(): bool {
         return $_SERVER["REQUEST_METHOD"] === 'POST';
+    }
+
+    protected function isDelete(): bool {
+        return $_SERVER["REQUEST_METHOD"] === 'DELETE';
+    }
+
+    protected function getNavList(): ?array {
+        $logged_in = (bool) $_SESSION["is_logged_in"] ?? false;
+        $user_role = (string) $_SESSION["user_role"] ?? "NONE";
+
+        $nav_items = [[
+            "text" => "Lista ogłoszeń",
+            "url" => "/home"
+        ]];
+
+        if ($logged_in && $user_role !== "NONE") {
+            $nav_items[] = [
+                "text" => "Dodaj ogłoszenie",
+                "url" => "/add-offer"
+            ];
+        }
+
+        if ($user_role === "ADMIN") {
+            $nav_items[] = [
+                "text" => "Panel Administratora",
+                "url" => "/admin"
+            ];
+        }
+
+        return ["logged_in" => $logged_in, "nav_items" => $nav_items];
     }
 }

@@ -72,8 +72,7 @@ class DashboardController extends AppController {
         return $this->render('dashboard', ['cards' => $cards]);
     }
 
-    public function search()
-    {
+    public function search() {
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
         header('Content-Type: application/json');
         

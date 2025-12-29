@@ -9,24 +9,6 @@ class SecurityController extends AppController {
     public function __construct(){
         $this->userRepository = new UserRepository();
     }
- 
-    private static array $users = [
-        [
-            'email' => 'anna@example.com',
-            'password' => '$2y$10$wz2g9JrHYcF8bLGBbDkEXuJQAnl4uO9RV6cWJKcf.6uAEkhFZpU0i', // test123
-            'first_name' => 'Anna'
-        ],
-        [
-            'email' => 'bartek@example.com',
-            'password' => '$2y$10$fK9rLobZK2C6rJq6B/9I6u6Udaez9CaRu7eC/0zT3pGq5piVDsElW', // haslo456
-            'first_name' => 'Bartek'
-        ],
-        [
-            'email' => 'celina@example.com',
-            'password' => '$2y$10$Cq1J6YMGzRKR6XzTb3fDF.6sC6CShm8kFgEv7jJdtyWkhC1GuazJa', // qwerty
-            'first_name' => 'Celina'
-        ],
-    ];
 
     public function login() {
         
@@ -38,31 +20,28 @@ class SecurityController extends AppController {
         $password = $_POST["password"];
 
         if (empty($email) || empty($password)) {
-            return $this->render("login", ["messages" =>"fill all fields"]);
+            return $this->render("login", ["messages" =>"Uzupełnij wszystkie pola."]);
         }
         
         $user = $this->userRepository->getUserByEmail($email);
 
         if (!$user) {
-            return $this->render('login', ['messages' => 'User not found']);
+            return $this->render('login', ['messages' => 'Nie znaleziono użytkownika.']);
         }
         
         if (!password_verify($password, $user['password'])) {
-            return $this->render('login', ['messages' => 'Wrong password']);
+            return $this->render('login', ['messages' => 'Nieprawidłowe hasło.']);
         }
 
-        // return $this->render("user-page");
+        $user_role = $this->userRepository->getUserRoleByEmail($email);
 
-        // create user session, cookie, token JWT
+        session_regenerate_id(true); 
 
-        // Tworzymy sesję użytkownika
-        session_regenerate_id(true); // nowy identyfikator sesji (bezpieczeństwo)
-
-        $_SESSION['user_id'] = $user['id'];          // zakładam, że w tablicy $user jest klucz 'id'
-        $_SESSION['user_email'] = $user['email'];    // zapamiętujemy np. e-mail
+        $_SESSION['user_id'] = $user['id']; 
+        $_SESSION['user_email'] = $user['email']; 
         $_SESSION['user_firstname'] = $user['firstname'] ?? null;
+        $_SESSION['user_role'] = $user_role ?? null;
 
-        // ewentualnie możesz dodać prostą flagę:
         $_SESSION['is_logged_in'] = true;
 
         $url = "http://$_SERVER[HTTP_HOST]";
@@ -80,10 +59,14 @@ class SecurityController extends AppController {
         $userName = $_POST["userName"] ?? "";
         $surname = $_POST["surname"] ?? "";
 
-        // TODO CHECK IF EMAIL ALREADY EXISTS
+        $userExists = $this->userRepository->getUserByEmail($email);
+
+        if ($userExists !== NULL) {
+            return $this->render('register', ['messages' => 'Nie można utworzyć konta.']);
+        }
         
         if ($password !== $repeatPassword) {
-            return $this->render('register', ['messages' => 'Passwords should be the same!']);
+            return $this->render('register', ['messages' => 'Podane hasła do siebie nie pasują']);
         }
         
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
@@ -96,7 +79,7 @@ class SecurityController extends AppController {
     }
 
     public function logout() {
-    // upewniamy się, że sesja jest uruchomiona
+        // upewniamy się, że sesja jest uruchomiona
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -118,9 +101,8 @@ class SecurityController extends AppController {
             );
         }
 
-    // niszczymy sesję
+        // niszczymy sesję
         session_destroy();
-
         // przekierowanie np. na ekran logowania
         $url = "http://$_SERVER[HTTP_HOST]";
         header("Location: {$url}/login");

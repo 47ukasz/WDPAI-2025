@@ -51,11 +51,18 @@ textarea {
   display: block;
 } */
 
-.nav-list {
+.nav-list,
+.nav-list-desktop {
   list-style: none;
 }
 
-.nav-list li {
+.nav-list-desktop {
+  display: none;
+}
+
+.nav-list li a,
+.nav-list-desktop li a {
+  text-decoration: none;
   font-size: 1.8rem;
   color: var(--green);
   font-weight: bold;
@@ -139,6 +146,10 @@ textarea {
   border: 1px solid var(--light-gray);
 }
 
+a.btn {
+  text-decoration: none;
+}
+
 a.btn-outline {
   text-decoration: none;
   width: 100%;
@@ -149,12 +160,32 @@ a.btn-outline {
   margin-bottom: 2rem;
 }
 
+.form-validation {
+  list-style: none;
+  margin: 0.7rem 0;
+  width: 100%;
+  background-color: #ffd6d6;
+  border-radius: 1rem;
+}
+
+.form-validation li {
+  margin: 0.5rem 0;
+  padding: 0.7rem;
+  font-size: 1.3rem;
+  color: var(--red);
+}
+
 .input-box > input,
 .input-box > textarea {
   padding: 2rem;
   border: 1px solid var(--light-gray);
   border-radius: 1rem;
   width: 100%;
+}
+
+.input-box > input.no-valid,
+.input-box > textarea.no-valid {
+  border: 1px solid var(--red);
 }
 
 .input-box > textarea {
@@ -226,6 +257,11 @@ a.btn-outline {
   gap: 3rem;
 }
 
+.nav-box-desktop {
+  display: none;
+  gap: 3rem;
+}
+
 .nav-mobile nav {
   display: flex;
   flex-direction: column;
@@ -265,6 +301,42 @@ a.btn-outline {
   display: flex;
 }
 
+.background {
+  padding: 0 2rem;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 100;
+}
+
+.background-show {
+  display: flex;
+}
+
+.modal {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  width: 100%;
+  background-color: white;
+}
+
+.modal-title {
+  margin-bottom: 3rem;
+  font-size: 1.5rem;
+}
+
+.modal-form {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
 @media (min-width: 500px) {
   .pagination-list {
     width: 60%;
@@ -274,6 +346,14 @@ a.btn-outline {
 @media (min-width: 700px) {
   .pagination-list {
     width: 50%;
+  }
+
+  .modal {
+    width: 70vw;
+  }
+
+  .modal-title {
+    font-size: 1.8rem;
   }
 }
 
@@ -305,11 +385,46 @@ a.btn-outline {
   .pagination-list {
     width: 30%;
   }
+
+  .modal {
+    width: 60vw;
+  }
+
+  .nav-menu {
+    display: none;
+  }
+
+  .nav-box {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .nav-box-desktop {
+    display: flex;
+  }
+
+  .nav-list-desktop {
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  .avatar {
+    width: 5rem;
+  }
 }
 
 @media (min-width: 1400px) {
   .container {
     max-width: 1400px;
     margin: 0 auto;
+  }
+
+  .modal {
+    width: 30vw;
+  }
+
+  .modal-title {
+    font-size: 2rem;
   }
 }

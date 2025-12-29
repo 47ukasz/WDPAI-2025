@@ -28,6 +28,41 @@
   color: var(--green);
 }
 
+#spinner:not([hidden]) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#spinner::after {
+  content: "";
+  width: 80px;
+  height: 80px;
+  border: 2px solid var(--light-gray);
+  border-top: 3px solid var(--green);
+  border-radius: 100%;
+  will-change: transform;
+  animation: spin 1s infinite linear;
+}
+
+.pagination,
+.items {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (min-width: 992px) {
   .search {
     display: flex;

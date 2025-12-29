@@ -15,14 +15,20 @@ class Routing {
 
     public static $routes = [
         'login'=> ['controller' => 'SecurityController', 'action' => 'login'],
+        'logout'=> ['controller' => 'SecurityController', 'action' => 'logout'],
         'dashboard'=> ['controller' => 'DashboardController', 'action' => 'index'],
         'add-offer'=> ['controller' => 'AddOfferController', 'action' => 'index'],
+        'addOffer'=> ['controller' => 'AddOfferController', 'action' => 'addOffer'],
+        'update-offer'=> ['controller' => 'AddOfferController', 'action' => 'index'],
+        'updateOffer'=> ['controller' => 'AddOfferController', 'action' => 'updateOffer'],
         'user-page'=> ['controller' => 'UserPageController', 'action' => 'index'],
+        'offer-delete'=> ['controller' => 'UserPageController', 'action' => 'deleteOffer'],
         'register'=> ['controller' => 'SecurityController', 'action' => 'register'],
         'home'=> ['controller' => 'HomeController', 'action' => 'index'],
         'admin'=> ['controller' => 'AdminController', 'action' => 'index'],
         'item'=> ['controller' => 'ItemController', 'action' => 'index'],
-        'search-cards'=> ['controller' => 'DashboardController', 'action' => 'search']
+        'search-cards'=> ['controller' => 'DashboardController', 'action' => 'search'],
+        'search-offers'=> ['controller' => 'HomeController', 'action' => 'search'],
     ];
 
     public static function run(string $path) {
@@ -30,16 +36,28 @@ class Routing {
         // singleton do repository, bazy danych oraz wlasnie routing
         // IN_ARRAY($path, Routing::$routes)
 
-
-        if (!isset(self::$routes[$path])) {
+        if (!preg_match('#^([a-z0-9\-]+)(?:/(\d+))?$#i', $path, $matches)) {
             include "public/views/404.html";
             return;
         }
 
-        $controllerName = self::$routes[$path]['controller'];
-        $action = self::$routes[$path]['action'];
+        $route = $matches[1];
+        $id = isset($matches[2]) ? (int)$matches[2] : null;
+        
+        if (!isset(self::$routes[$route])) {
+            include "public/views/404.html";
+            return;
+        }
+
+        $controllerName = self::$routes[$route]['controller'];
+        $action = self::$routes[$route]['action'];
 
         $controller = new $controllerName();
-        $controller->$action(); // tu kiedyś możesz dodać parametry z URL
+
+        if ($id !== null) {
+            $controller->$action($id);
+        } else {
+            $controller->$action();
+        }
     }
 }

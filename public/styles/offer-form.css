@@ -49,6 +49,12 @@
   margin-top: 2rem;
 }
 
+.form-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.5rem;
+}
+
 @media (min-width: 1200px) {
   .offer-content form,
   .offer-content-box {
