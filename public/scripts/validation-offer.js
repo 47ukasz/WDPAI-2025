@@ -57,14 +57,12 @@ function validatePhoto() {
     return;
   }
 
-  // przykładowy limit 4MB (możesz zmienić)
   const maxBytes = 4 * 1024 * 1024;
 
   const ok = isAllowedImageType(file) && file.size <= maxBytes;
   markValidation(photoInput, ok);
 }
 
-// submit validation
 function onSubmit(e) {
   const errors = [];
 

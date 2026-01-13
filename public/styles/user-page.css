@@ -26,6 +26,24 @@
   border-bottom-left-radius: 1.5rem;
 }
 
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.item-link {
+  color: var(--light-gray);
+  text-decoration: none;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.item-link:hover {
+  color: #aeb5b8;
+}
+
 .item-title {
   font-size: 2rem;
   font-weight: bold;

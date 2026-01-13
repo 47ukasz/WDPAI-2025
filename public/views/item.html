@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel administratora</title>
-    <link rel="stylesheet" href="public/styles/main.css" />
-    <link rel="stylesheet" href="public/styles/user-page.css" />
-    <link rel="stylesheet" href="public/styles/home.css" />
-    <link rel="stylesheet" href="public/styles/item.css" />
+    <link rel="stylesheet" href="/public/styles/main.css" />
+    <link rel="stylesheet" href="/public/styles/user-page.css" />
+    <link rel="stylesheet" href="/public/styles/home.css" />
+    <link rel="stylesheet" href="/public/styles/item.css" />
     <script
       src="https://kit.fontawesome.com/cf24175f1e.js"
       crossorigin="anonymous"
     ></script>
-    <script src="public/scripts/main.js" defer></script>
+    <script src="/public/scripts/main.js" defer></script>
   </head>
   <body>
     <div class="nav-mobile">
@@ -28,16 +28,16 @@
           <a href="/home">
             <img
               class="logo"
-              src="public/images/logo.png"
+              src="/public/images/logo.png"
               alt="Logo aplikacji"
             />
           </a>
         </div>
         <div class="nav-box">
           <ul class="nav-list">
-            <?php foreach ($nav_items as $item): ?>
+            <?php foreach ($nav_items as $navItem): ?>
             <li>
-              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
+              <a href="<?= $navItem['url'] ?>"><?= $navItem['text'] ?></a>
             </li>
             <?php endforeach; ?>
           </ul>
@@ -49,13 +49,13 @@
             >Rejestracja</a
           >
         </div>
-        <? else: ?>
+        <?php else: ?>
         <div class="nav-box nav-box-buttons">
           <a href="/logout" class="btn btn-primary">Wyloguj</a>
           <a href="/user-page">
             <img
               class="avatar"
-              src="public/images/avatar.png"
+              src="/public/images/avatar.png"
               alt="Awatar użytkownika"
             />
           </a>
@@ -69,14 +69,14 @@
           <a href="/home">
             <img
               class="logo"
-              src="public/images/logo.png"
+              src="/public/images/logo.png"
               alt="Logo aplikacji"
             />
           </a>
           <ul class="nav-list-desktop">
-            <?php foreach ($nav_items as $item): ?>
+            <?php foreach ($nav_items as $navItem): ?>
             <li>
-              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
+              <a href="<?= $navItem['url'] ?>"><?= $navItem['text'] ?></a>
             </li>
             <?php endforeach; ?>
           </ul>
@@ -95,7 +95,7 @@
             <a href="/user-page">
               <img
                 class="avatar"
-                src="public/images/avatar.png"
+                src="/public/images/avatar.png"
                 alt="Awatar użytkownika"
               />
             </a>
@@ -109,33 +109,34 @@
       <main>
         <img
           class="product-photo"
-          src="public/images/backpack.png"
+          src="/public<?= $item->getPhotoPath(); ?>"
           alt="Skórzana kurtka"
         />
         <div class="product-info">
-          <h1 class="product-name">Plecak UrbanPack 35</h1>
-          <p class="product-price">999.99 PLN</p>
-          <p class="product-description">
-            Stylowy i funkcjonalny plecak miejski wykonany z wytrzymałego
-            materiału o wodoodpornej strukturze. Posiada pojemną komorę główną,
-            przednią kieszeń na drobiazgi oraz wzmocnione szelki zapewniające
-            komfort noszenia. Idealny do pracy, szkoły i na krótkie wyjazdy.
-          </p>
+          <h1 class="product-name"><?= $item->getTitle(); ?></h1>
+          <p class="product-price"><?= $item->getPrice(); ?> PLN</p>
+          <p class="product-description"><?= $item->getDescription(); ?></p>
         </div>
         <div class="contact-seller">
           <p>Skontakuj się ze sprzedawcą</p>
           <div class="contact-seller-box">
             <img
               class="seller-avatar"
-              src="public/images/avatar.png"
+              src="/public/images/avatar.png"
               alt="Skórzana kurtka"
             />
             <div class="seller-info">
-              <p class="seller-name">Piotr Nowak</p>
-              <p class="seller-date">Wystawione: 15 Oct 2025</p>
+              <p class="seller-name"><?= $item->getUserFullName(); ?></p>
+              <p class="seller-date">
+                Wystawione:
+                <?= $item->getCreatedAt(); ?>
+              </p>
             </div>
           </div>
-          <button class="btn btn-primary">Kontakt</button>
+          <button class="btn btn-primary btn-phone">
+            <i class="fa-solid fa-phone"></i>
+            <?= $item->getPhoneNumber()?>
+          </button>
         </div>
       </main>
 

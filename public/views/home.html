@@ -110,14 +110,14 @@
         <h1 class="header">Znajdź to, czego szukasz</h1>
       </div>
       <div class="searchbar">
-        <form class="search" action="">
+        <form class="search" method="get">
           <div class="input-box">
             <label>Czego szukasz?</label>
-            <input type="text" placeholder="np. rower górski" />
+            <input type="text" placeholder="Podaj tytuł ogłoszenia..." />
           </div>
           <div class="searchbar-btn">
-            <button class="btn btn-search">Szukaj</button>
-            <button class="btn btn-reset">
+            <button class="btn btn-search" type="submit">Szukaj</button>
+            <button class="btn btn-reset" type="reset">
               <i class="fa-solid fa-xmark fa-2xl" style="color: #ff9b2f"></i>
             </button>
           </div>
@@ -127,26 +127,18 @@
         <section class="items">
           <ul class="items-list"></ul>
         </section>
+        <section>
+          <div hidden id="spinner"></div>
         <section class="pagination">
           <div class="pagination-menu">
             <button>
               <i class="fa-solid fa-angle-left fa-2xl" style="color: #000"></i>
             </button>
-            <ul class="pagination-list">
-              <li class="selected">1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-              <li>...</li>
-              <li>10</li>
-            </ul>
+            <ul class="pagination-list"></ul>
             <button>
               <i class="fa-solid fa-angle-right fa-2xl" style="color: #000"></i>
             </button>
           </div>
-        </section>
-        <section>
-          <div hidden id="spinner"></div>
         </section>
       </main>
 

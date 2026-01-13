@@ -212,14 +212,20 @@ a.btn-outline {
 }
 
 .pagination-menu button {
+  margin: 0 1rem;
   background: none;
   border: none;
+  cursor: pointer;
+}
+
+.pagination-menu button:disabled i {
+  color: var(--light-gray) !important;
 }
 
 .pagination-list {
-  width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  align-items: center;
+  gap: 1.5rem;
   list-style: none;
 }
 
@@ -338,16 +344,9 @@ a.btn-outline {
 }
 
 @media (min-width: 500px) {
-  .pagination-list {
-    width: 60%;
-  }
 }
 
 @media (min-width: 700px) {
-  .pagination-list {
-    width: 50%;
-  }
-
   .modal {
     width: 70vw;
   }
@@ -380,10 +379,6 @@ a.btn-outline {
 
   .nav {
     margin-bottom: 5rem;
-  }
-
-  .pagination-list {
-    width: 30%;
   }
 
   .modal {

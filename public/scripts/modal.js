@@ -8,9 +8,13 @@ const cancelBtn = modalForm.querySelector("button[type='button']");
 const modalBackground = modal.parentElement;
 
 function handleOpenModal(item) {
+  console.log("test");
+
   if (!item) {
     return;
   }
+
+  console.log("test 2");
 
   const itemId = item.dataset.id;
   const itemTitle = item.querySelector(".item-title").textContent;
@@ -23,11 +27,11 @@ function handleOpenModal(item) {
   modalFormInput.value = itemId;
 
   modalTitleSpan.textContent = modalTitleText;
-  modalBackground.classList.add("show");
+  modalBackground.classList.add("background-show");
 }
 
 function handleCloseModal() {
-  modalBackground.classList.remove("show");
+  modalBackground.classList.remove("background-show");
 }
 
 function handleDeleteItem(id) {

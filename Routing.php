@@ -1,7 +1,7 @@
 <?php
 
 require_once 'src/controllers/SecurityController.php';
-require_once 'src/controllers/AddOfferController.php';
+require_once 'src/controllers/OfferFormController.php';
 require_once 'src/controllers/UserPageController.php';
 require_once 'src/controllers/DashboardController.php';
 require_once 'src/controllers/HomeController.php';
@@ -17,10 +17,10 @@ class Routing {
         'login'=> ['controller' => 'SecurityController', 'action' => 'login'],
         'logout'=> ['controller' => 'SecurityController', 'action' => 'logout'],
         'dashboard'=> ['controller' => 'DashboardController', 'action' => 'index'],
-        'add-offer'=> ['controller' => 'AddOfferController', 'action' => 'index'],
-        'addOffer'=> ['controller' => 'AddOfferController', 'action' => 'addOffer'],
-        'update-offer'=> ['controller' => 'AddOfferController', 'action' => 'index'],
-        'updateOffer'=> ['controller' => 'AddOfferController', 'action' => 'updateOffer'],
+        'add-offer'=> ['controller' => 'OfferFormController', 'action' => 'index'],
+        'addOffer'=> ['controller' => 'OfferFormController', 'action' => 'addOffer'],
+        'update-offer'=> ['controller' => 'OfferFormController', 'action' => 'index'],
+        'updateOffer'=> ['controller' => 'OfferFormController', 'action' => 'updateOffer'],
         'user-page'=> ['controller' => 'UserPageController', 'action' => 'index'],
         'offer-delete'=> ['controller' => 'UserPageController', 'action' => 'deleteOffer'],
         'register'=> ['controller' => 'SecurityController', 'action' => 'register'],

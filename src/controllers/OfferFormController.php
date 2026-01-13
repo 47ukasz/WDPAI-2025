@@ -4,7 +4,7 @@ require_once __DIR__ . '/AppController.php';
 require_once __DIR__ . '/../repository/ItemsRepository.php';
 require_once __DIR__ . '/../services/ValidationService.php';
 
-class AddOfferController extends AppController {
+class OfferFormController extends AppController {
     private $itemsRepository;
 
     public function __construct() {
@@ -44,7 +44,6 @@ class AddOfferController extends AppController {
 
         $photo = $_FILES["photo"] ?? null;
         
-        // TODO ADD SAVING PHOTO ON SERVER
         $photo_path = "";
         
         if ($photo && $photo['error'] === UPLOAD_ERR_OK) {

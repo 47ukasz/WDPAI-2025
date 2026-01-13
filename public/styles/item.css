@@ -64,6 +64,13 @@
   width: 100%;
 }
 
+.btn-phone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
 @media (min-width: 992px) {
   .product-photo {
     max-width: 50%;
@@ -91,7 +98,7 @@
   }
 
   .product-name {
-    font-size: 4rem;
+    font-size: 3rem;
   }
 
   .product-description {

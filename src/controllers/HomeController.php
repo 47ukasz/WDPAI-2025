@@ -17,26 +17,23 @@ class HomeController extends AppController {
     }
 
     public function search() {
-        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
         header('Content-Type: application/json');
         
-        if (!$this->isPost()) {
+        if (!$this->isGet()) {
             http_response_code(405);
             echo json_encode(["status" => "405", "message" => "Method not allowed!"]);
             return;
         }
 
-        if ($contentType !== "application/json") {
-            http_response_code(415);
-            echo json_encode(["status" => "415", "message" => "Content type not allowed!"]);
-            return;
-        }
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        $pageSize = isset($_GET['pageSize']) ? (int) $_GET['pageSize'] : 5;
+        $title = isset($_GET['title']) ? (string) $_GET['title'] : "";
         
-        $content = trim(file_get_contents("php://input"));
-        $decoded = json_decode($content, true);
-
         http_response_code(200);
-        $items = $this->itemsRepository->getItems();
-        echo json_encode($items);
+
+        $items = $this->itemsRepository->getItems($page, $pageSize, $title);
+        $total = $this->itemsRepository->getItemsCount($title);
+
+        echo json_encode(["items" => $items, "total" => $total, "page" => $page, "pageSize" => $pageSize]);
     }
 }
