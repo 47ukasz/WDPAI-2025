@@ -2,6 +2,7 @@
 
 class Item {
     private $id;
+    private $user_id;  
     private $user_full_name;
     private $price;
     private $title;
@@ -10,7 +11,7 @@ class Item {
     private $description;
     private $created_at;
 
-    public function __construct($id, $user_full_name, $title, $phone_number, $photo_path, $description, $created_at, $price) {
+    public function __construct($id, $user_full_name, $title, $phone_number, $photo_path, $description, $created_at, $price, $user_id) {
         $this->id = $id;
         $this->user_full_name = $user_full_name;
         $this->title = $title;
@@ -18,6 +19,7 @@ class Item {
         $this->photo_path = $photo_path;
         $this->description = $description;
         $this->price = $price;
+        $this->user_id = $user_id;
 
         $date = new DateTime($created_at);
 
@@ -60,4 +62,5 @@ class Item {
     public function getDescription() { return $this->description; }
     public function getCreatedAt() { return $this->created_at; }
     public function getPrice() { return $this->price; }
+    public function getUserId() { return $this->user_id; }
 }

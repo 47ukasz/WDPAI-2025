@@ -36,8 +36,8 @@
 
 #spinner::after {
   content: "";
-  width: 80px;
-  height: 80px;
+  width: 0.8rem;
+  height: 0.8rem;
   border: 2px solid var(--light-gray);
   border-top: 3px solid var(--green);
   border-radius: 100%;

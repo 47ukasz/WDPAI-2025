@@ -96,9 +96,21 @@ class SecurityController extends AppController {
         $userExists = $this->userRepository->getUserByEmail($email);
 
         if ($userExists !== NULL) {
-            return $this->render('register', ['messages' => 'Nie można utworzyć konta.']);
+            return $this->render('register', ['messages' => 'Email lub hasło niepoprawne.']);
+        }
+
+        if (!ValidationService::required($userName) || !ValidationService::length($userName, 2, 20)) {
+            return $this->render('register', ['messages' => 'Imię użytkownika musi się składać z 2 znaków']);
         }
         
+        if (!ValidationService::required($surname) || !ValidationService::length($surname, 2, 20)) {
+            return $this->render('register', ['messages' => 'Nazwisko użytkownika musi się składać z 2 znaków']);
+        }
+
+        if (!ValidationService::length($password, 10, 100)) {
+            return $this->render('register', ['messages' => 'Hasło musi składać się z minimum 10 znaków']);
+        }
+
         if ($password !== $repeatPassword) {
             return $this->render('register', ['messages' => 'Podane hasła do siebie nie pasują']);
         }

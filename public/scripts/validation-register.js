@@ -52,7 +52,7 @@ function validatePassword() {
   setTimeout(() => {
     markValidation(
       passwordInput,
-      isNotEmpty(passwordInput.value) && hasMinLength(passwordInput.value, 6),
+      isNotEmpty(passwordInput.value) && hasMinLength(passwordInput.value, 10),
     );
 
     validateRepeatPassword();
@@ -68,7 +68,7 @@ function validateRepeatPassword() {
       repeatPasswordInput,
       isNotEmpty(repeat) &&
         arePasswordsSame(pass, repeat) &&
-        hasMinLength(repeat, 6),
+        hasMinLength(repeat, 10),
     );
   }, 500);
 }
@@ -110,8 +110,8 @@ function onSubmit(e) {
   // haslo
   if (!isNotEmpty(passwordValue)) {
     errors.push("Wprowadź hasło.");
-  } else if (!hasMinLength(passwordValue, 6)) {
-    errors.push("Hasło powinno składać się z conajmniej sześciu znaków.");
+  } else if (!hasMinLength(passwordValue, 10)) {
+    errors.push("Hasło powinno składać się z conajmniej dziesięciu znaków.");
   }
 
   // haslo 2
@@ -139,13 +139,13 @@ function onSubmit(e) {
   );
   markValidation(
     passwordInput,
-    isNotEmpty(passwordValue) && hasMinLength(passwordValue, 6),
+    isNotEmpty(passwordValue) && hasMinLength(passwordValue, 10),
   );
   markValidation(
     repeatPasswordInput,
     isNotEmpty(repeatPasswordValue) &&
       arePasswordsSame(passwordValue, repeatPasswordValue) &&
-      hasMinLength(repeatPasswordValue, 6),
+      hasMinLength(repeatPasswordValue, 10),
   );
 
   if (errors.length > 0) {

@@ -32,8 +32,8 @@ class AppController {
         }
 
         if (empty($_SESSION['user_id'])) {
-            $url = "http://$_SERVER[HTTP_HOST]";
-            header("Location: {$url}/login");
+            http_response_code(401);
+            $this->render("error", ["error_code" => 401, "error_message" => "Użytkownik nie zalogowany."]);
             exit();
         }
     }
@@ -44,8 +44,10 @@ class AppController {
         $user_role = (string) $_SESSION["user_role"] ?? "NONE";
 
         if ($user_role !== 'ADMIN') {
-            $url = "http://$_SERVER[HTTP_HOST]";
-            header("Location: {$url}/home");
+            // $url = "http://$_SERVER[HTTP_HOST]";
+            // header("Location: {$url}/403");
+            http_response_code(403);
+            $this->render("error", ["error_code" => 403, "error_message" => "Brak uprawnień."]);
             exit();
         }
     }

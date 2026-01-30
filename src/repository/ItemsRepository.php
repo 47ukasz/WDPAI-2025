@@ -130,7 +130,7 @@ class ItemsRepository extends Repository {
             $fullUserName = $fetchedUserData["firstname"] . " " . $fetchedUserData["lastname"];
         }
 
-        $item = new Item((int) $fetchedItem["id"], $fullUserName, $fetchedItem["title"], $fetchedItem["phone_number"], $fetchedItem["photo_path"], $fetchedItem["description"], $fetchedItem["created_at"], $fetchedItem["price"]);
+        $item = new Item((int) $fetchedItem["id"], $fullUserName, $fetchedItem["title"], $fetchedItem["phone_number"], $fetchedItem["photo_path"], $fetchedItem["description"], $fetchedItem["created_at"], $fetchedItem["price"], $user_id);
 
         return $item;
     }

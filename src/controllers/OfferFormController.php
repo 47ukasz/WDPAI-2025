@@ -20,12 +20,14 @@ class OfferFormController extends AppController {
     } 
 
     public function index(?int $id = null) {
+        $this->requireLogin();
+
         if ($id !== null) {
             $offer = $this->itemsRepository->getItemById($id);
 
             if ($offer === null) {
                 // np. 404
-                return $this->render("404");
+                return $this->render("error", ["error_code" => 404, "error_message" => "Ogłoszenie o podanym ID nie istnieje."]);
             }
 
             return $this->render("offer-form", ["offer" => $offer]);
@@ -38,7 +40,7 @@ class OfferFormController extends AppController {
         $this->requireLogin();
 
         if (!$this->isPost()) {
-            return $this->render("add-offer");
+            return $this->render("offer-form");
         }
 
         $errors = [];
@@ -83,8 +85,6 @@ class OfferFormController extends AppController {
         if (!ValidationService::phone($phone_number)) {
             $errors[] = "Nieprawidłowy numer.";
         }
-
-        // TODO VALIDATE VARIABLES 
         
         if (!empty($errors)) {
             return $this->render("add-offer", ["messages" => $errors]);
@@ -107,26 +107,28 @@ class OfferFormController extends AppController {
         $errors = [];
         
         $user_id = (int) $_SESSION["user_id"];
-        $offer_id = (int) $_POST["id"] ?? null;
+        $offer_id = (int)($_POST["id"] ?? 0);
         $title = trim($_POST["title"] ?? "");
         $description = trim($_POST["description"] ?? "");
         $price = (float) ($_POST["price"] ?? 0);
         $phone_number = trim($_POST["phone_number"] ?? ""); 
         $photo = $_FILES["photo"] ?? null;
         
-        if (!$offer_id) {
-            return $this->render("user-page");
+        if ($offer_id <= 0) {
+            http_response_code(404);
+            return $this->render("error", ["error_code" => 404, "error_message" => "Brak ID ogłoszenia."]);
         }
         
         $existingOffer = $this->itemsRepository->getItemById($offer_id);
 
         if ($existingOffer === null) {
-            return $this->render("user-page");
+            http_response_code(404);
+            return $this->render("error", ["error_code" => 404, "error_message" => "Ogłoszenie o podanym ID nie istnieje."]);
         }
 
-        if ($existingOffer->getUserId() !== $user_id) {
+        if ((int)$existingOffer->getUserId() !== (int)$user_id) {
             http_response_code(403);
-            return $this->render("403");
+            return $this->render("error", ["error_code" => 403, "error_message" => "Nie można edytować ogłoszenia o podanym ID."]);
         }
 
         $photo_path = $existingOffer->getPhotoPath() ?? "/uploads/default_photo.png";
@@ -163,13 +165,7 @@ class OfferFormController extends AppController {
         // TODO VALIDATE VARIABLES 
         
         if (!empty($errors)) {
-            $offerToRender = $existingOffer;
-            $offerToRender["id"] = $offer_id;
-            $offerToRender["title"] = $title;
-            $offerToRender["description"] = $description;
-            $offerToRender["price"] = $price;
-            $offerToRender["phone_number"] = $phone_number;
-            $offerToRender["photo_path"] = $photo_path;
+            $offerToRender = new Item((int) $offer_id, "", $title, $phone_number, $photo_path, $description, "", $price, $user_id);
             return $this->render("add-offer", ["messages" => $errors, "offer" => $offerToRender]);
         } else {
             $this->itemsRepository->updateItem($offer_id, $user_id, $title, $description, $price, $phone_number, $photo_path);
