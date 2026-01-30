@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -30,7 +30,11 @@
           enctype="multipart/form-data"
         >
           <?php if (isset($offer)): ?>
-          <input type="hidden" name="id" value="<?= $offer->getId() ?>" />
+          <input
+            type="hidden"
+            name="id"
+            value="<?= htmlspecialchars($offer->getId()) ?>"
+          />
           <?php endif; ?>
 
           <div class="container-box">
@@ -41,14 +45,20 @@
                 type="text"
                 id="title"
                 placeholder="Wpisz tytuł ogłoszenia"
-                value="<?= $offer->getTitle() ?>"
+                value="<?= isset($offer) ? htmlspecialchars($offer->getTitle()) : '' ?>"
               />
             </div>
 
             <div class="input-box">
               <label for="description">Opis</label>
-              <!-- prettier-ignore -->
-              <textarea name="description" type="text" id="description" placeholder="Wpisz opis ogłoszenia"><?= $offer->getDescription() ?></textarea>
+              <textarea
+                name="description"
+                type="text"
+                id="description"
+                placeholder="Wpisz opis ogłoszenia"
+              >
+<?= isset($offer) ? htmlspecialchars($offer->getDescription()) : '' ?></textarea
+              >
             </div>
 
             <div class="offer-content-box">
@@ -61,7 +71,7 @@
                   placeholder="Wpisz cenę"
                   min="0"
                   step="0.01"
-                  value="<?= $offer->getPrice() ?>"
+                  value="<?= isset($offer) ? htmlspecialchars($offer->getPrice()) : '' ?>"
                 />
               </div>
 
@@ -74,7 +84,7 @@
                   placeholder="Wpisz numer telefonu"
                   pattern="^(?:\+48\s?)?(?:\d[\s-]?){8}\d$"
                   inputmode="tel"
-                  value="<?= $offer->getPhoneNumber() ?>"
+                  value="<?= isset($offer) ? htmlspecialchars($offer->getPhoneNumber()) : '' ?>"
                 />
               </div>
             </div>
@@ -83,7 +93,8 @@
           <div class="container-box container-box-button">
             <div class="input-box-file">
               <label for="photo">
-                <?= isset($offer) ? "Zmień zdjęcie (opcjonalne)" : "Zdjęcie (opcjonalne)" ?>
+                <?= isset($offer) ? "Zmień zdjęcie (opcjonalne)" : "Zdjęcie
+                (opcjonalne)" ?>
               </label>
               <div>
                 <input name="photo" type="file" id="photo" />
@@ -110,11 +121,9 @@
           </div>
         </form>
         <ul class="form-validation">
-          <?php if(isset($messages)): ?>
-          <?php foreach ($messages as $msg): ?>
-          <li><? echo $msg; ?></li>
-          <?php endforeach; ?>
-          <?php endif; ?>
+          <?php if(isset($messages)): ?> <?php foreach ($messages as $msg): ?>
+          <li><?= htmlspecialchars($msg); ?></li>
+          <?php endforeach; ?> <?php endif; ?>
         </ul>
       </main>
     </div>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -29,124 +29,19 @@
         </form>
       </div>
     </div>
-    <div class="nav-mobile">
-      <button class="nav-back-btn">
-        <i
-          class="fa-solid fa-arrow-left-long fa-2xl"
-          style="color: #78c841"
-        ></i>
-      </button>
-
-      <nav>
-        <div class="nav-box">
-          <a href="/home">
-            <img
-              class="logo"
-              src="public/images/logo.png"
-              alt="Logo aplikacji"
-            />
-          </a>
-        </div>
-        <div class="nav-box">
-          <ul class="nav-list">
-            <?php foreach ($nav_items as $item): ?>
-            <li>
-              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
-            </li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-        <?php if (!$logged_in): ?>
-        <div class="nav-box nav-box-buttons">
-          <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
-          <a href="/register" class="btn btn-primary btn-register"
-            >Rejestracja</a
-          >
-        </div>
-        <? else: ?>
-        <div class="nav-box nav-box-buttons">
-          <a href="/logout" class="btn btn-primary">Wyloguj</a>
-          <a href="/user-page">
-            <img
-              class="avatar"
-              src="public/images/avatar.png"
-              alt="Awatar użytkownika"
-            />
-          </a>
-        </div>
-        <?php endif; ?>
-      </nav>
-    </div>
+    <?php require_once __DIR__ . "/partials/nav_mobile.html"; ?>
     <div class="container">
-      <nav class="nav">
-        <div class="nav-box">
-          <a href="/home">
-            <img
-              class="logo"
-              src="public/images/logo.png"
-              alt="Logo aplikacji"
-            />
-          </a>
-          <ul class="nav-list-desktop">
-            <?php foreach ($nav_items as $item): ?>
-            <li>
-              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
-            </li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-        <div class="nav-box">
-          <?php if (!$logged_in): ?>
-          <div class="nav-box-desktop">
-            <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
-            <a href="/register" class="btn btn-primary btn-register"
-              >Rejestracja</a
-            >
-          </div>
-          <? else: ?>
-          <div class="nav-box-desktop">
-            <a href="/logout" class="btn btn-primary">Wyloguj</a>
-            <a href="/user-page">
-              <img
-                class="avatar"
-                src="public/images/avatar.png"
-                alt="Awatar użytkownika"
-              />
-            </a>
-          </div>
-          <?php endif; ?>
-          <button class="nav-menu">
-            <i class="fa-solid fa-bars fa-2xl" style="color: #78c841"></i>
-          </button>
-        </div>
-      </nav>
+      <?php require_once __DIR__ . "/partials/nav_desktop.html"; ?>
       <main>
         <div class="heading-box">
           <h1 class="header">Panel administratora</h1>
           <p class="header-info">Lista Użytkowników</p>
         </div>
-        <?php if (count($users) >0): ?>
-        <div class="searchbar">
-          <form class="search" action="">
-            <div class="input-box">
-              <label>Czego szukasz?</label>
-              <input type="text" placeholder="Wprowadź nazwę użytkownika" />
-            </div>
-            <div class="searchbar-btn">
-              <button class="btn btn-search">Szukaj</button>
-              <button class="btn btn-reset">
-                <i class="fa-solid fa-xmark fa-2xl" style="color: #ff9b2f"></i>
-              </button>
-            </div>
-          </form>
-        </div>
-        <?php endif; ?>
-
         <section>
           <p class="admin-panel-mobile">
             Lista użytkowników nie jest obsługiwana w wersji mobilnej.
           </p>
-          <?php if (count($users) >0): ?>
+          <?php if (count($users) > 0): ?>
           <div class="admin-panel">
             <table>
               <thead>
@@ -160,21 +55,17 @@
               </thead>
               <tbody>
                 <?php foreach ($users as $user): ?>
-                <tr data-id="<?= $user->getId(); ?>">
-                  <td><?= $user->getId(); ?></td>
-                  <td id="full-name"><?= $user->getFullName(); ?></td>
-                  <td><?= $user->getEmail(); ?></td>
+                <tr data-id="<?= htmlspecialchars($user->getId()); ?>">
+                  <td><?= htmlspecialchars($user->getId()); ?></td>
+                  <td id="full-name">
+                    <?= htmlspecialchars($user->getFullName()); ?>
+                  </td>
+                  <td><?= htmlspecialchars($user->getEmail()); ?></td>
                   <td>2025-01-15</td>
                   <td>
                     <button class="delete-btn modal-trigger">
-                      <i
-                        class="fa-solid fa-trash fa-xl"
-                        style="color: #fb4141"
-                      ></i>
-                      <i
-                        class="fa-solid fa-trash fa-2xl"
-                        style="color: #fb4141"
-                      ></i>
+                      <i class="fa-solid fa-trash fa-xl"></i>
+                      <i class="fa-solid fa-trash fa-2xl"></i>
                     </button>
                   </td>
                 </tr>
@@ -183,29 +74,10 @@
             </table>
           </div>
         </section>
-
-        <section>
-          <div class="pagination-menu">
-            <button>
-              <i class="fa-solid fa-angle-left fa-2xl" style="color: #000"></i>
-            </button>
-            <ul class="pagination-list">
-              <li class="selected">1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-              <li>...</li>
-              <li>10</li>
-            </ul>
-            <button>
-              <i class="fa-solid fa-angle-right fa-2xl" style="color: #000"></i>
-            </button>
-          </div>
-        </section>
         <?php endif; ?>
       </main>
 
-      <footer></footer>
+      <?php require_once __DIR__ . "/partials/footer.html"; ?>
     </div>
   </body>
 </html>

@@ -5,9 +5,17 @@ require_once __DIR__ . '/../repository/ItemsRepository.php';
 
 class ItemController extends AppController {
     private $itemsRepository;
+    private static $instance = null;
 
-    public function __construct() {
-        $this->itemsRepository = new ItemsRepository();
+    private function __construct() {
+        $this->itemsRepository = ItemsRepository::getInstance();
+    }
+
+    public static function getInstance(): ItemController {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     public function index(?int $id = null) {
@@ -16,13 +24,11 @@ class ItemController extends AppController {
         }
 
         $item = $this->itemsRepository->getItemById($id);
-
+    
         if ($item === null) {
             return $this->render("404");
         }
 
-        $nav = $this->getNavList();
-
-        return $this->render("item", ["item" => $item, "logged_in" => $nav["logged_in"], "nav_items" => $nav["nav_items"]]);
+        return $this->render("item", ["item" => $item]);
     }
 }

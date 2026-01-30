@@ -5,15 +5,22 @@ require_once __DIR__ . '/../repository/ItemsRepository.php';
 
 class HomeController extends AppController {
     private $itemsRepository;
+    private static $instance = null;
 
-    public function __construct() {
-        $this->itemsRepository = new ItemsRepository();
+    private function __construct() {
+        $this->itemsRepository = ItemsRepository::getInstance();
     }
     
-    public function index() {
-        $nav = $this->getNavList();
+    public static function getInstance(): HomeController {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
 
-        return $this->render("home", $nav);
+        return self::$instance;
+    }
+
+    public function index() {
+        return $this->render("home");
     }
 
     public function search() {

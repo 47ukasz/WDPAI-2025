@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -15,97 +15,9 @@
     <script src="public/scripts/home.js" defer></script>
   </head>
   <body>
-    <div class="nav-mobile">
-      <button class="nav-back-btn">
-        <i
-          class="fa-solid fa-arrow-left-long fa-2xl"
-          style="color: #78c841"
-        ></i>
-      </button>
-
-      <nav>
-        <div class="nav-box">
-          <a href="/home">
-            <img
-              class="logo"
-              src="public/images/logo.png"
-              alt="Logo aplikacji"
-            />
-          </a>
-        </div>
-        <div class="nav-box">
-          <ul class="nav-list">
-            <?php foreach ($nav_items as $item): ?>
-            <li>
-              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
-            </li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-        <?php if (!$logged_in): ?>
-        <div class="nav-box nav-box-buttons">
-          <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
-          <a href="/register" class="btn btn-primary btn-register"
-            >Rejestracja</a
-          >
-        </div>
-        <? else: ?>
-        <div class="nav-box nav-box-buttons">
-          <a href="/logout" class="btn btn-primary">Wyloguj</a>
-          <a href="/user-page">
-            <img
-              class="avatar"
-              src="public/images/avatar.png"
-              alt="Awatar użytkownika"
-            />
-          </a>
-        </div>
-        <?php endif; ?>
-      </nav>
-    </div>
+    <?php require_once __DIR__ . "/partials/nav_mobile.html"; ?>
     <div class="container">
-      <nav class="nav">
-        <div class="nav-box">
-          <a href="/home">
-            <img
-              class="logo"
-              src="public/images/logo.png"
-              alt="Logo aplikacji"
-            />
-          </a>
-          <ul class="nav-list-desktop">
-            <?php foreach ($nav_items as $item): ?>
-            <li>
-              <a href="<?= $item['url'] ?>"><?= $item['text'] ?></a>
-            </li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-        <div class="nav-box">
-          <?php if (!$logged_in): ?>
-          <div class="nav-box-desktop">
-            <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
-            <a href="/register" class="btn btn-primary btn-register"
-              >Rejestracja</a
-            >
-          </div>
-          <? else: ?>
-          <div class="nav-box-desktop">
-            <a href="/logout" class="btn btn-primary">Wyloguj</a>
-            <a href="/user-page">
-              <img
-                class="avatar"
-                src="public/images/avatar.png"
-                alt="Awatar użytkownika"
-              />
-            </a>
-          </div>
-          <?php endif; ?>
-          <button class="nav-menu">
-            <i class="fa-solid fa-bars fa-2xl" style="color: #78c841"></i>
-          </button>
-        </div>
-      </nav>
+      <?php require_once __DIR__ . "/partials/nav_desktop.html"; ?>
       <div class="heading-box">
         <h1 class="header">Znajdź to, czego szukasz</h1>
       </div>
@@ -127,8 +39,7 @@
         <section class="items">
           <ul class="items-list"></ul>
         </section>
-        <section>
-          <div hidden id="spinner"></div>
+        <div hidden id="spinner"></div>
         <section class="pagination">
           <div class="pagination-menu">
             <button>
@@ -140,9 +51,9 @@
             </button>
           </div>
         </section>
+        <p class="none-items">Brak przedmiotów do wyświetlenia.</p>
       </main>
-
-      <footer></footer>
+      <?php require_once __DIR__ . "/partials/footer.html"; ?>
     </div>
   </body>
 </html>

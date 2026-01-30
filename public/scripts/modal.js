@@ -8,13 +8,9 @@ const cancelBtn = modalForm.querySelector("button[type='button']");
 const modalBackground = modal.parentElement;
 
 function handleOpenModal(item) {
-  console.log("test");
-
   if (!item) {
     return;
   }
-
-  console.log("test 2");
 
   const itemId = item.dataset.id;
   const itemTitle = item.querySelector(".item-title").textContent;
@@ -63,7 +59,7 @@ function handleFormSubmit(e) {
   const itemId = modalFormInput.value;
 
   fetch("offer-delete", {
-    method: "DELETE", // na razie dowolne
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
@@ -80,7 +76,6 @@ function handleFormSubmit(e) {
     })
     .then((data) => {
       const isDeleted = data.deleted;
-      console.log("Success:", isDeleted);
 
       if (isDeleted) {
         handleDeleteItem(itemId);

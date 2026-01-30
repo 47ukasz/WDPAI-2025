@@ -2,22 +2,22 @@
 
 class User {
     private $id;
-    private $fistname;
+    private $firstname;
     private $lastname;
     private $email;
 
-    public function __construct($id, $fistname, $lastname, $email) {
+    public function __construct($id, $firstname, $lastname, $email) {
         $this->id = $id;
-        $this->fistname = $fistname;
+        $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->email = $email;
     }
 
     public function getId() { return $this->id; }
-    public function getFirstName() { return $this->fistname; }
+    public function getFirstName() { return $this->firstname; }
     public function getLastName() { return $this->lastname; }
     public function getEmail() { return $this->email; }
     public function getFullName() {
-        return $this->fistname . " " . $this->lastname;
+        return $this->firstname . " " . $this->lastname;
     }
 }

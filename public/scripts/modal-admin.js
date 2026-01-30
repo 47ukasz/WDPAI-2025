@@ -55,7 +55,7 @@ function handleFormSubmit(e) {
   const userId = modalFormInput.value;
 
   fetch("user-delete", {
-    method: "DELETE", // na razie dowolne
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },

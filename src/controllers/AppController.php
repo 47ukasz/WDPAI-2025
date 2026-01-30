@@ -5,7 +5,12 @@ class AppController {
         $templatePath = 'public/views/'. $template.'.html';
         $templatePath404 = 'public/views/404.html';
         $output = "";
-                 
+
+        $nav = $this->getNavList();
+
+        $variables["logged_in"] = $nav["logged_in"] ?? false;
+        $variables["nav_items"] = $nav["nav_items"] ?? [];
+
         if(file_exists($templatePath)){
             extract($variables);
             
@@ -17,6 +22,7 @@ class AppController {
             include $templatePath404;
             $output = ob_get_clean();
         }
+
         echo $output;
     }
 
@@ -28,6 +34,18 @@ class AppController {
         if (empty($_SESSION['user_id'])) {
             $url = "http://$_SERVER[HTTP_HOST]";
             header("Location: {$url}/login");
+            exit();
+        }
+    }
+
+    protected function requireAdmin() {
+        $this->requireLogin();
+
+        $user_role = (string) $_SESSION["user_role"] ?? "NONE";
+
+        if ($user_role !== 'ADMIN') {
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/home");
             exit();
         }
     }
@@ -44,9 +62,17 @@ class AppController {
         return $_SERVER["REQUEST_METHOD"] === 'DELETE';
     }
 
-    protected function getNavList(): ?array {
-        $logged_in = (bool) $_SESSION["is_logged_in"] ?? false;
-        $user_role = (string) $_SESSION["user_role"] ?? "NONE";
+    private function getNavList(): ?array {
+        $logged_in = false;
+        $user_role = "NONE";
+        
+        if (isset($_SESSION["is_logged_in"])) {
+            $logged_in = (bool) $_SESSION["is_logged_in"];
+        }
+
+        if (isset($_SESSION["user_role"])) {
+            $user_role = (string) $_SESSION["user_role"];
+        }
 
         $nav_items = [[
             "text" => "Lista ogłoszeń",

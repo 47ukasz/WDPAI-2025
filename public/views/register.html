@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -20,6 +20,7 @@
       </div>
       <div class="container-box">
         <form action="\register" method="POST">
+          <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>" />
           <div class="input-box">
             <label for="email">Adres e-mail</label>
             <input

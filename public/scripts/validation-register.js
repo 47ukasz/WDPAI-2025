@@ -15,7 +15,7 @@ const userNameInput = document.querySelector('input[name="userName"]');
 const surnameInput = document.querySelector('input[name="surname"]');
 const passwordInput = document.querySelector('input[name="password"]');
 const repeatPasswordInput = document.querySelector(
-  'input[name="repeatPassword"]'
+  'input[name="repeatPassword"]',
 );
 const formValidation = document.querySelector(".form-validation");
 
@@ -32,7 +32,7 @@ function validateUserName() {
       userNameInput,
       isNotEmpty(userNameInput.value) &&
         hasMinLength(userNameInput.value, 2) &&
-        isValidName(userNameInput.value)
+        isValidName(userNameInput.value),
     );
   }, 500);
 }
@@ -43,7 +43,7 @@ function validateSurname() {
       surnameInput,
       isNotEmpty(surnameInput.value) &&
         hasMinLength(surnameInput.value, 2) &&
-        isValidName(surnameInput.value)
+        isValidName(surnameInput.value),
     );
   }, 500);
 }
@@ -52,7 +52,7 @@ function validatePassword() {
   setTimeout(() => {
     markValidation(
       passwordInput,
-      isNotEmpty(passwordInput.value) && hasMinLength(passwordInput.value, 6)
+      isNotEmpty(passwordInput.value) && hasMinLength(passwordInput.value, 6),
     );
 
     validateRepeatPassword();
@@ -68,7 +68,7 @@ function validateRepeatPassword() {
       repeatPasswordInput,
       isNotEmpty(repeat) &&
         arePasswordsSame(pass, repeat) &&
-        hasMinLength(repeat, 6)
+        hasMinLength(repeat, 6),
     );
   }, 500);
 }
@@ -129,23 +129,23 @@ function onSubmit(e) {
     userNameInput,
     isNotEmpty(userNameValue) &&
       hasMinLength(userNameValue, 2) &&
-      isValidName(userNameValue)
+      isValidName(userNameValue),
   );
   markValidation(
     surnameInput,
     isNotEmpty(surnameValue) &&
       hasMinLength(surnameValue, 2) &&
-      isValidName(surnameValue)
+      isValidName(surnameValue),
   );
   markValidation(
     passwordInput,
-    isNotEmpty(passwordValue) && hasMinLength(passwordValue, 6)
+    isNotEmpty(passwordValue) && hasMinLength(passwordValue, 6),
   );
   markValidation(
     repeatPasswordInput,
     isNotEmpty(repeatPasswordValue) &&
       arePasswordsSame(passwordValue, repeatPasswordValue) &&
-      hasMinLength(repeatPasswordValue, 6)
+      hasMinLength(repeatPasswordValue, 6),
   );
 
   if (errors.length > 0) {

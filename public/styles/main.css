@@ -312,7 +312,7 @@ a.btn-outline {
   display: none;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -343,7 +343,32 @@ a.btn-outline {
   gap: 2rem;
 }
 
-@media (min-width: 500px) {
+footer {
+  border-top: 1px solid var(--light-gray);
+  margin-top: 2rem;
+  padding: 2rem;
+}
+
+footer p {
+  font-size: 1.6rem;
+  text-align: center;
+  color: var(--dark-blue);
+}
+
+footer p > span {
+  font-weight: bold;
+}
+
+footer p > .first {
+  color: var(--green);
+}
+
+footer p > .dot {
+  color: var(--light-gray);
+}
+
+footer p > .second {
+  color: var(--orange);
 }
 
 @media (min-width: 700px) {

@@ -1,12 +1,13 @@
 const spinner = document.getElementById("spinner");
 const items = document.querySelector(".items");
+const noneItemsInfo = document.querySelector(".none-items");
 const pagination = document.querySelector(".pagination");
 const paginationList = document.querySelector(".pagination-list");
 const prevButton = document.querySelector(
-  ".pagination-menu button:first-of-type"
+  ".pagination-menu button:first-of-type",
 );
 const nextButton = document.querySelector(
-  ".pagination-menu button:last-of-type"
+  ".pagination-menu button:last-of-type",
 );
 const itemsList = document.querySelector(".items-list");
 const searchForm = document.querySelector("form.search");
@@ -27,11 +28,10 @@ function loadData(page = 1) {
   console.log(paginationInfo.searchTitle);
 
   fetch(
-    `http://localhost:8080/search-offers?page=${paginationInfo.page}}&pageSize=${paginationInfo.pageSize}&title=${paginationInfo.searchTitle}`
+    `http://localhost:8080/search-offers?page=${paginationInfo.page}&pageSize=${paginationInfo.pageSize}&title=${paginationInfo.searchTitle}`,
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       spinner.setAttribute("hidden", "");
 
       const itemsData = data.items.length > 0 ? data.items : [];
@@ -43,14 +43,23 @@ function loadData(page = 1) {
 
       paginationInfo.totalPages = Math.max(
         1,
-        Math.ceil(total / paginationInfo.pageSize)
+        Math.ceil(total / paginationInfo.pageSize),
       );
 
-      renderItems(itemsData);
-      renderPagination();
+      if (itemsData.length > 0) {
+        renderItems(itemsData);
+        renderPagination();
 
-      items.classList.add("show");
-      pagination.classList.add("show");
+        items.classList.add("show");
+        pagination.classList.add("show");
+
+        noneItemsInfo.classList.remove("show");
+      } else {
+        noneItemsInfo.classList.add("show");
+
+        items.classList.remove("show");
+        pagination.classList.remove("show");
+      }
 
       handleSynchronizeUrl();
     });
@@ -140,6 +149,10 @@ function handleSearchFormSubmit(e) {
   paginationInfo.searchTitle = value;
   loadData();
   searchInput.value = "";
+
+  noneItemsInfo.classList.remove("show");
+  items.classList.remove("show");
+  pagination.classList.remove("show");
 }
 
 function handleSynchronizeUrl() {
@@ -154,6 +167,11 @@ function handleSynchronizeUrl() {
 
   if (!url.searchParams.has("pageSize")) {
     url.searchParams.set("pageSize", paginationInfo.pageSize);
+    changed = true;
+  }
+
+  if (!url.searchParams.has("title")) {
+    url.searchParams.set("title", paginationInfo.searchTitle);
     changed = true;
   }
 
@@ -178,21 +196,20 @@ nextButton.addEventListener("click", () => {
 
 searchForm.addEventListener("submit", handleSearchFormSubmit);
 
-document.addEventListener("DOMContentLoaded", () => {
-  handleSynchronizeUrl();
+handleSynchronizeUrl();
 
-  const url = new URL(window.location.href);
-  const page = Number(url.searchParams.get("page")) ?? paginationInfo.page;
-  const pageSize =
-    Number(url.searchParams.get("pageSize")) ?? paginationInfo.pageSize;
-  const searchTitle = url.searchParams.get("title") ?? "";
+const url = new URL(window.location.href);
+const page = Number(url.searchParams.get("page")) ?? paginationInfo.page;
+const pageSize =
+  Number(url.searchParams.get("pageSize")) ?? paginationInfo.pageSize;
+const searchTitle = url.searchParams.get("title") ?? "";
 
-  paginationInfo.page = page;
-  paginationInfo.pageSize = pageSize;
+paginationInfo.page = page;
 
-  if (searchTitle !== "" || searchTitle !== undefined) {
-    paginationInfo.searchTitle = searchTitle;
-  }
+paginationInfo.pageSize = pageSize;
 
-  loadData();
-});
+if (searchTitle !== "" || searchTitle !== undefined) {
+  paginationInfo.searchTitle = searchTitle;
+}
+
+loadData();

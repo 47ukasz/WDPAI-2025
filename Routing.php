@@ -3,7 +3,6 @@
 require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/OfferFormController.php';
 require_once 'src/controllers/UserPageController.php';
-require_once 'src/controllers/DashboardController.php';
 require_once 'src/controllers/HomeController.php';
 require_once 'src/controllers/AdminController.php';
 require_once 'src/controllers/ItemController.php';
@@ -16,7 +15,6 @@ class Routing {
     public static $routes = [
         'login'=> ['controller' => 'SecurityController', 'action' => 'login'],
         'logout'=> ['controller' => 'SecurityController', 'action' => 'logout'],
-        'dashboard'=> ['controller' => 'DashboardController', 'action' => 'index'],
         'add-offer'=> ['controller' => 'OfferFormController', 'action' => 'index'],
         'addOffer'=> ['controller' => 'OfferFormController', 'action' => 'addOffer'],
         'update-offer'=> ['controller' => 'OfferFormController', 'action' => 'index'],
@@ -26,16 +24,12 @@ class Routing {
         'register'=> ['controller' => 'SecurityController', 'action' => 'register'],
         'home'=> ['controller' => 'HomeController', 'action' => 'index'],
         'admin'=> ['controller' => 'AdminController', 'action' => 'index'],
+        'user-delete'=> ['controller' => 'AdminController', 'action' => 'userDelete'],
         'item'=> ['controller' => 'ItemController', 'action' => 'index'],
-        'search-cards'=> ['controller' => 'DashboardController', 'action' => 'search'],
         'search-offers'=> ['controller' => 'HomeController', 'action' => 'search'],
     ];
 
     public static function run(string $path) {
-        // trzeba regex dać
-        // singleton do repository, bazy danych oraz wlasnie routing
-        // IN_ARRAY($path, Routing::$routes)
-
         if (!preg_match('#^([a-z0-9\-]+)(?:/(\d+))?$#i', $path, $matches)) {
             include "public/views/404.html";
             return;
@@ -52,7 +46,7 @@ class Routing {
         $controllerName = self::$routes[$route]['controller'];
         $action = self::$routes[$route]['action'];
 
-        $controller = new $controllerName();
+        $controller = $controllerName::getInstance();
 
         if ($id !== null) {
             $controller->$action($id);

@@ -47,12 +47,26 @@
 }
 
 .delete-btn {
+  margin-right: 1rem;
+}
+
+.delete-btn i {
+  color: #fb4141;
+}
+
+.admin-btn i {
+  color: var(--orange);
+}
+
+.delete-btn,
+.admin-btn {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.delete-btn i.fa-2xl {
+.delete-btn i.fa-2xl,
+.admin-btn i.fa-2xl {
   display: none;
 }
 
@@ -79,11 +93,13 @@
     font-size: 1.6rem;
   }
 
-  .delete-btn i.fa-2xl {
+  .delete-btn i.fa-2xl,
+  .admin-btn i.fa-2xl {
     display: block;
   }
 
-  .delete-btn i.fa-xl {
+  .delete-btn i.fa-2xl,
+  .admin-btn i.fa-2xl {
     display: none;
   }
 }

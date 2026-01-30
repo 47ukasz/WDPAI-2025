@@ -5,9 +5,18 @@ require_once __DIR__ . '/../repository/ItemsRepository.php';
 
 class UserPageController extends AppController {
     private $itemsRepository;
+    private static $instance = null;
 
-    public function __construct() {
-        $this->itemsRepository = new ItemsRepository();
+    private function __construct() {
+        $this->itemsRepository = ItemsRepository::getInstance();
+    }
+
+    public static function getInstance(): UserPageController {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 
     public function index() {
@@ -15,9 +24,8 @@ class UserPageController extends AppController {
         
         $user_id = (int) $_SESSION["user_id"];
         $items = $this->itemsRepository->getItemsByUserId($user_id);
-        $nav = $this->getNavList();
 
-        return $this->render("user-page", ["items" => $items, "logged_in" => $nav["logged_in"], "nav_items" => $nav["nav_items"]]);
+        return $this->render("user-page", ["items" => $items]);
     }
 
     public function deleteOffer() {

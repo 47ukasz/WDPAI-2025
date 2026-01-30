@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Panel administratora</title>
+    <title>Strona ogłoszenia</title>
     <link rel="stylesheet" href="/public/styles/main.css" />
     <link rel="stylesheet" href="/public/styles/user-page.css" />
     <link rel="stylesheet" href="/public/styles/home.css" />
@@ -15,132 +15,51 @@
     <script src="/public/scripts/main.js" defer></script>
   </head>
   <body>
-    <div class="nav-mobile">
-      <button class="nav-back-btn">
-        <i
-          class="fa-solid fa-arrow-left-long fa-2xl"
-          style="color: #78c841"
-        ></i>
-      </button>
-
-      <nav>
-        <div class="nav-box">
-          <a href="/home">
-            <img
-              class="logo"
-              src="/public/images/logo.png"
-              alt="Logo aplikacji"
-            />
-          </a>
-        </div>
-        <div class="nav-box">
-          <ul class="nav-list">
-            <?php foreach ($nav_items as $navItem): ?>
-            <li>
-              <a href="<?= $navItem['url'] ?>"><?= $navItem['text'] ?></a>
-            </li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-        <?php if (!$logged_in): ?>
-        <div class="nav-box nav-box-buttons">
-          <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
-          <a href="/register" class="btn btn-primary btn-register"
-            >Rejestracja</a
-          >
-        </div>
-        <?php else: ?>
-        <div class="nav-box nav-box-buttons">
-          <a href="/logout" class="btn btn-primary">Wyloguj</a>
-          <a href="/user-page">
-            <img
-              class="avatar"
-              src="/public/images/avatar.png"
-              alt="Awatar użytkownika"
-            />
-          </a>
-        </div>
-        <?php endif; ?>
-      </nav>
-    </div>
+    <?php require_once __DIR__ . "/partials/nav_mobile.html"; ?>
     <div class="container">
-      <nav class="nav">
-        <div class="nav-box">
-          <a href="/home">
-            <img
-              class="logo"
-              src="/public/images/logo.png"
-              alt="Logo aplikacji"
-            />
-          </a>
-          <ul class="nav-list-desktop">
-            <?php foreach ($nav_items as $navItem): ?>
-            <li>
-              <a href="<?= $navItem['url'] ?>"><?= $navItem['text'] ?></a>
-            </li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-        <div class="nav-box">
-          <?php if (!$logged_in): ?>
-          <div class="nav-box-desktop">
-            <a href="/login" class="btn btn-primary btn-login">Logowanie</a>
-            <a href="/register" class="btn btn-primary btn-register"
-              >Rejestracja</a
-            >
-          </div>
-          <? else: ?>
-          <div class="nav-box-desktop">
-            <a href="/logout" class="btn btn-primary">Wyloguj</a>
-            <a href="/user-page">
-              <img
-                class="avatar"
-                src="/public/images/avatar.png"
-                alt="Awatar użytkownika"
-              />
-            </a>
-          </div>
-          <?php endif; ?>
-          <button class="nav-menu">
-            <i class="fa-solid fa-bars fa-2xl" style="color: #78c841"></i>
-          </button>
-        </div>
-      </nav>
+      <?php require_once __DIR__ . "/partials/nav_desktop.html"; ?>
       <main>
         <img
           class="product-photo"
-          src="/public<?= $item->getPhotoPath(); ?>"
-          alt="Skórzana kurtka"
+          src="/public<?= htmlspecialchars($item->getPhotoPath()); ?>"
+          alt="Zdjęcie produktu"
         />
         <div class="product-info">
-          <h1 class="product-name"><?= $item->getTitle(); ?></h1>
-          <p class="product-price"><?= $item->getPrice(); ?> PLN</p>
-          <p class="product-description"><?= $item->getDescription(); ?></p>
+          <h1 class="product-name">
+            <?= htmlspecialchars($item->getTitle()); ?>
+          </h1>
+          <p class="product-price">
+            <?= htmlspecialchars($item->getPrice()); ?> PLN
+          </p>
+          <p class="product-description">
+            <?= htmlspecialchars($item->getDescription()); ?>
+          </p>
         </div>
         <div class="contact-seller">
-          <p>Skontakuj się ze sprzedawcą</p>
+          <p>Skontaktuj się ze sprzedawcą</p>
           <div class="contact-seller-box">
             <img
               class="seller-avatar"
               src="/public/images/avatar.png"
-              alt="Skórzana kurtka"
+              alt="Awatar sprzedawcy"
             />
             <div class="seller-info">
-              <p class="seller-name"><?= $item->getUserFullName(); ?></p>
+              <p class="seller-name">
+                <?= htmlspecialchars($item->getUserFullName()); ?>
+              </p>
               <p class="seller-date">
-                Wystawione:
-                <?= $item->getCreatedAt(); ?>
+                Wystawione: <?= htmlspecialchars($item->getCreatedAt()); ?>
               </p>
             </div>
           </div>
           <button class="btn btn-primary btn-phone">
             <i class="fa-solid fa-phone"></i>
-            <?= $item->getPhoneNumber()?>
+            <?= htmlspecialchars($item->getPhoneNumber()) ?>
           </button>
         </div>
       </main>
 
-      <footer></footer>
+      <?php require_once __DIR__ . "/partials/footer.html"; ?>
     </div>
   </body>
 </html>

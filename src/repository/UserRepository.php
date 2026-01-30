@@ -4,62 +4,77 @@ require_once 'Repository.php';
 require_once __DIR__ . '/../models/User.php';
 
 class UserRepository extends Repository {
+    private static $instance = null;
+    private $connection;
+
+    private function __construct() {
+        parent::__construct();
+
+        $this->connection = $this->database->connect();
+    }
+
+    public function __destruct() {
+        $this->connection = null;
+    }
+
+    public static function getInstance(): UserRepository {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
 
     public function getUsers(): ?array {
-        $db = $this->database->connect();
-        $query = $db->prepare('SELECT * FROM users');
+        $query = $this->connection->prepare('SELECT * FROM users');
         $query->execute();
 
         $fetchedUsers = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        $db = null;
-
         $users = [];
 
         foreach ($fetchedUsers as $fu) {
-            $users[] = new User((int) $fu['id'], $fu['firstname'], $fu['lastname'], $fu['email']
-        );
-    }
+            $users[] = new User((int) $fu['id'], $fu['firstname'], $fu['lastname'], $fu['email']);
+        }
 
-    return $users;
+        return $users;
     }
 
     public function createUser(string $email, string $hashedPassword, string $firstName, string $lastName, string $bio = ''): void {
-        $db = $this->database->connect();
 
         try {
-            $db->beginTransaction();
+            $this->connection->beginTransaction();
 
-            $query = $db->prepare("INSERT INTO users (firstname, lastname, email, password, bio) VALUES (?, ?, ?, ?, ?)");
+            $query = $this->connection->prepare("INSERT INTO users (firstname, lastname, email, password, bio) VALUES (?, ?, ?, ?, ?)");
             $query->execute([$firstName, $lastName, $email, $hashedPassword, $bio]);
 
-            $userId = $db->lastInsertId();
+            $userId = $this->connection->lastInsertId();
 
-            $roleQuery = $db->prepare("
+            $roleQuery = $this->connection->prepare("
                 SELECT id FROM roles WHERE name = :role
             ");
             
             $roleQuery->execute(['role' => 'USER']);
             $roleId = $roleQuery->fetchColumn();
 
-            $userRoleQuery = $db->prepare("INSERT INTO user_roles (user_id, role_id) VALUES (:user_id, :role_id)");
+            $userRoleQuery = $this->connection->prepare("INSERT INTO users_roles (user_id, role_id) VALUES (:user_id, :role_id)");
             
             $userRoleQuery->execute([
                 'user_id' => $userId,
                 'role_id' => $roleId
             ]);
 
-            $db->commit();
+            $this->connection->commit();
         } catch (Exception $e) {
-            $db->rollBack();
-            throw $e;
+            $this->connection->rollBack();
         }
     }
 
-    public function getUserByEmail(string $email): ?array {
-        $query = $this->database->connect()->prepare('
+    public function getUserByEmail(string $email): ?User {
+        $query = $this->connection->prepare('
             SELECT * FROM users u WHERE email = :email
         ');
+
         $query->bindParam(':email', $email, PDO::PARAM_STR);
         $query->execute();
 
@@ -69,11 +84,13 @@ class UserRepository extends Repository {
             return null;
         }
 
-        return $user;
+        $fetchedUser = new User((int)$user['id'], $user['firstname'], $user['lastname'], $user['email']);
+
+        return $fetchedUser;
     }
 
     public function getUserRoleByEmail(string $email): ?string {
-        $query = $this->database->connect()->prepare('
+        $query = $this->connection->prepare('
             SELECT name
             FROM user_roles_view
             WHERE email = :email
@@ -92,12 +109,42 @@ class UserRepository extends Repository {
     }
 
     public function deleteUser(int $user_id) {
-        $query = $this->database->connect()->prepare("DELETE FROM users WHERE id = :user_id");
+        try {
+            $this->connection->beginTransaction();
 
-        $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+            $query = $this->connection->prepare('DELETE FROM items WHERE user_id = :user_id');
+            $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
 
+            $query->execute();
+
+            $query = $this->connection->prepare('DELETE FROM users WHERE id = :user_id');
+            $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+
+            $query->execute();
+
+            $this->connection->commit();
+
+            return $query->rowCount() > 0;
+        } catch (Exception $e) {
+            $this->connection->rollBack();
+            return false;
+        }
+    }
+
+    public function getUserPassword(string $email): ?string {
+        $query = $this->connection->prepare('
+            SELECT password FROM users WHERE email = :email
+        ');
+
+        $query->bindParam(':email', $email, PDO::PARAM_STR);
         $query->execute();
 
-        return $query->rowCount() > 0;
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($result === false) {
+            return null;
+        }
+
+        return $result['password'];
     }
 }

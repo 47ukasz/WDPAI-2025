@@ -17,4 +17,8 @@ class ValidationService {
     public static function phone(string $value): bool {
         return preg_match('/^\+[0-9]{1,3}[\s\-()]*(?:[0-9][\s\-()]*){6,14}$/', $value);
     }
+
+    public static function isValidEmail(string $email): bool {
+        return (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
 }

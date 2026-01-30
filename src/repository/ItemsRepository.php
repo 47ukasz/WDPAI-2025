@@ -4,6 +4,26 @@ require_once 'Repository.php';
 require_once __DIR__ . '/../models/Item.php';
 
 class ItemsRepository extends Repository {
+    private static $instance = null;
+    private $connection;
+
+    private function __construct() {
+        parent::__construct();
+
+        $this->connection = $this->database->connect();
+    }
+
+    public function __destruct() {
+        $this->connection = null;
+    }
+
+    public static function getInstance(): ItemsRepository {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
 
     public function getItems(int $page = 1, int $pageSize = 5, string $title = ""): ?array {
         $page = max(1, $page);
@@ -13,12 +33,12 @@ class ItemsRepository extends Repository {
         $query = null;
 
         if (trim($title) === "") {
-            $query = $this->database->connect()->prepare('
+            $query = $this->connection->prepare('
                 SELECT * FROM items
                 LIMIT :limit OFFSET :offset
             ');
         } else {
-            $query = $this->database->connect()->prepare('
+            $query = $this->connection->prepare('
                 SELECT * FROM items
                 WHERE title ILIKE :title
                 LIMIT :limit OFFSET :offset
@@ -33,8 +53,6 @@ class ItemsRepository extends Repository {
 
         $items = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        // TODO CLOSE DB CONNECTION
-
         return $items;
     }
 
@@ -42,9 +60,9 @@ class ItemsRepository extends Repository {
         $query = "";
 
         if (trim($title) === "") {
-            $query = $this->database->connect()->prepare('SELECT COUNT(*) AS count FROM items');
+            $query = $this->connection->prepare('SELECT COUNT(*) AS count FROM items');
         } else {
-            $query = $this->database->connect()->prepare('SELECT COUNT(*) AS count FROM items WHERE title ILIKE :title');
+            $query = $this->connection->prepare('SELECT COUNT(*) AS count FROM items WHERE title ILIKE :title');
             $query->bindValue(':title', '%' . trim($title) . '%', PDO::PARAM_STR);
         }
 
@@ -60,13 +78,13 @@ class ItemsRepository extends Repository {
     }
 
     public function createItem(int $user_id, string $title, string $description, float $price, string $phone_number, string $photo_path = ''): void {
-        $query = $this->database->connect()->prepare("INSERT INTO items (user_id, title, description, price, phone_number, photo_path) VALUES (?, ?, ?, ?, ?, ?);");
+        $query = $this->connection->prepare("INSERT INTO items (user_id, title, description, price, phone_number, photo_path) VALUES (?, ?, ?, ?, ?, ?);");
         
         $query->execute([$user_id, $title, $description, $price, $phone_number, $photo_path]);
     }
 
     public function deleteItem(int $item_id) {
-        $query = $this->database->connect()->prepare("DELETE FROM items WHERE id = :item_id");
+        $query = $this->connection->prepare("DELETE FROM items WHERE id = :item_id");
 
         $query->bindParam(':item_id', $item_id, PDO::PARAM_STR);
 
@@ -76,13 +94,13 @@ class ItemsRepository extends Repository {
     }
 
     public function updateItem(int $id, int $user_id, string $title, string $description, float $price, string $phone_number, string $photo_path): void {
-        $query = $this->database->connect()->prepare("UPDATE items SET title = ?, description = ?, price = ?, phone_number = ?, photo_path = ? WHERE id = ? AND user_id = ?");
+        $query = $this->connection->prepare("UPDATE items SET title = ?, description = ?, price = ?, phone_number = ?, photo_path = ? WHERE id = ? AND user_id = ?");
         
         $query->execute([$title, $description, $price, $phone_number, $photo_path, $id, $user_id]);
     }
 
     public function getItemById(int $item_id) {
-        $query = $this->database->connect()->prepare('
+        $query = $this->connection->prepare('
             SELECT * FROM items WHERE id = :item_id
         ');
 
@@ -95,7 +113,7 @@ class ItemsRepository extends Repository {
             return null;
         }
         
-        $userQuery = $this->database->connect()->prepare('
+        $userQuery = $this->connection->prepare('
             SELECT firstname, lastname FROM users WHERE id = :user_id
         ');
         
@@ -118,7 +136,7 @@ class ItemsRepository extends Repository {
     }
 
     public function getItemsByUserId(int $user_id): ?array {
-        $query = $this->database->connect()->prepare('
+        $query = $this->connection->prepare('
             SELECT * FROM items WHERE user_id = :user_id
         ');
         

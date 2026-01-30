@@ -46,12 +46,22 @@
 }
 
 .pagination,
-.items {
+.items,
+.none-items {
   display: none;
 }
 
 .show {
   display: block;
+}
+
+.none-items {
+  padding: 0.7rem 0;
+  font-size: 1.6rem;
+  color: var(--red);
+  background-color: oklch(97.1% 0.013 17.38);
+  text-align: center;
+  border-radius: 0.7rem;
 }
 
 @keyframes spin {
