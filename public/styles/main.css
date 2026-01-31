@@ -175,6 +175,17 @@ a.btn-outline {
   color: var(--red);
 }
 
+.login-successful {
+  padding: 0.7rem;
+  margin: 0.7rem 0;
+  width: 100%;
+  border-radius: 0.7rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--green);
+  background-color: #edffe1;
+}
+
 .input-box > input,
 .input-box > textarea {
   padding: 2rem;
@@ -382,6 +393,10 @@ footer p > .second {
 }
 
 @media (min-width: 992px) {
+  body {
+    min-height: 100vh;
+  }
+
   .header {
     font-size: 4rem;
   }

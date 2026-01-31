@@ -86,7 +86,7 @@ class ItemsRepository extends Repository {
     public function deleteItem(int $item_id) {
         $query = $this->connection->prepare("DELETE FROM items WHERE id = :item_id");
 
-        $query->bindParam(':item_id', $item_id, PDO::PARAM_STR);
+        $query->bindParam(':item_id', $item_id, PDO::PARAM_INT);
 
         $query->execute();
 
@@ -104,7 +104,7 @@ class ItemsRepository extends Repository {
             SELECT * FROM items WHERE id = :item_id
         ');
 
-        $query->bindParam(':item_id', $item_id, PDO::PARAM_STR);
+        $query->bindParam(':item_id', $item_id, PDO::PARAM_INT);
         $query->execute();
 
         $fetchedItem = $query->fetch(PDO::FETCH_ASSOC);
@@ -119,7 +119,7 @@ class ItemsRepository extends Repository {
         
         $user_id = (int) $fetchedItem["user_id"];
 
-        $userQuery->bindParam(":user_id", $user_id, PDO::PARAM_STR);
+        $userQuery->bindParam(":user_id", $user_id, PDO::PARAM_INT);
         $userQuery->execute();
         
         $fetchedUserData = $userQuery->fetch(PDO::FETCH_ASSOC);
@@ -140,7 +140,7 @@ class ItemsRepository extends Repository {
             SELECT * FROM items WHERE user_id = :user_id
         ');
         
-        $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $query->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $query->execute();
 
         $items = $query->fetchAll(PDO::FETCH_ASSOC);

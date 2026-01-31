@@ -26,7 +26,6 @@ class OfferFormController extends AppController {
             $offer = $this->itemsRepository->getItemById($id);
 
             if ($offer === null) {
-                // np. 404
                 return $this->render("error", ["error_code" => 404, "error_message" => "Ogłoszenie o podanym ID nie istnieje."]);
             }
 

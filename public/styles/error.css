@@ -1,0 +1,46 @@
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-code {
+  font-size: 3rem;
+}
+
+.error-info {
+  font-size: 1.4rem;
+  margin: 1rem 0 5rem;
+  padding: 1.5rem 5rem;
+  font-weight: bold;
+  background-color: #ffd6d6;
+  color: var(--red);
+  border-radius: 0.7rem;
+}
+
+.error-link {
+  padding-bottom: 1rem;
+  color: var(--green);
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+
+.error-link i {
+  margin-right: 0.5rem;
+}
+
+.error-link:hover {
+  border-bottom: 1px solid var(--green);
+}
+
+@media (min-width: 992px) {
+  .error-code {
+    font-size: 5rem;
+  }
+
+  .error-info {
+    font-size: 1.6rem;
+    width: 50rem;
+  }
+}

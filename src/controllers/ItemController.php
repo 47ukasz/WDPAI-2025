@@ -20,13 +20,21 @@ class ItemController extends AppController {
 
     public function index(?int $id = null) {
         if ($id === null) {
-            return $this->render("404");
+            http_response_code(404);
+            return $this->render("404", [
+                "error_code" => 404,
+                "error_message" => "Nie znaleziono przedmiotu o podanym ID."
+            ]);
         }
 
         $item = $this->itemsRepository->getItemById($id);
     
         if ($item === null) {
-            return $this->render("404");
+            http_response_code(404);
+            return $this->render("404", [
+                "error_code" => 404,
+                "error_message" => "Nie znaleziono przedmiotu o podanym ID."
+            ]);
         }
 
         return $this->render("item", ["item" => $item]);

@@ -4,12 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Błąd <?= $error_code ?? '' ?></title>
+    <link rel="stylesheet" href="public/styles/main.css" />
+    <link rel="stylesheet" href="public/styles/error.css" />
+    <script
+      src="https://kit.fontawesome.com/cf24175f1e.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
-    <h1>Błąd <?= $error_code ?? '' ?></h1>
+    <div class="error-box">
+      <h1 class="error-code">Błąd <?= $error_code ?? '' ?></h1>
 
-    <p><?= $error_message ?? 'Wystąpił błąd' ?></p>
+      <p class="error-info"><?= $error_message ?? 'Wystąpił błąd' ?></p>
 
-    <a href="/home">Powrót na stronę główną</a>
+      <a href="/home" class="error-link"
+        ><i class="fa-solid fa-arrow-left fa-xl"></i> Powrót na stronę główną</a
+      >
+    </div>
   </body>
 </html>

@@ -44,6 +44,10 @@
             <li><?= $messages; ?></li>
             <?php endif; ?>
           </ul>
+          <?php if(isset($success)): ?>
+          <p class="login-successful"><?= $success; ?></p>
+          <?php endif; ?>
+
           <div class="button-box">
             <button id="login-btn" class="btn btn-primary">Zaloguj się</button>
             <a href="register" class="btn btn-outline" role="button"

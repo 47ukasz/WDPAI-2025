@@ -30,7 +30,11 @@ class SecurityController extends AppController {
         }
 
         if (!isset($_POST['csrf']) || $_POST['csrf'] !== $_SESSION['csrf']) {
-            return $this->render("404");
+            http_response_code(403);
+            return $this->render("403", [
+                "error_code" => 403,
+                "error_message" => "Nieprawidłowy token CSRF."
+            ]);
         }
 
         $email = $_POST["email"] ?? "";
@@ -80,7 +84,11 @@ class SecurityController extends AppController {
         }
 
         if (!isset($_POST['csrf']) || $_POST['csrf'] !== $_SESSION['csrf']) {
-            return $this->render("404");
+            http_response_code(403);
+            return $this->render("403", [
+                "error_code" => 403,
+                "error_message" => "Nieprawidłowy token CSRF."
+            ]);
         }
         
         $email = $_POST["email"] ?? "";
@@ -121,7 +129,7 @@ class SecurityController extends AppController {
             $email, $hashedPassword, $userName, $surname
         );
 
-        return $this->render("login", ['messages' => 'Utworzono nowe konto, zaloguj się!']);
+        return $this->render("login", ['success' => 'Utworzono nowe konto, zaloguj się!']);
     }
 
     public function logout() {

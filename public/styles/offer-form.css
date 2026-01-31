@@ -55,6 +55,24 @@
   gap: 1.5rem;
 }
 
+.upload-info {
+  margin-top: 1rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.5rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.upload-successful {
+  color: var(--green);
+  background-color: #edffe1;
+}
+
+.upload-bad {
+  background-color: #ffd6d6;
+  color: var(--red);
+}
+
 @media (min-width: 1200px) {
   .offer-content form,
   .offer-content-box {

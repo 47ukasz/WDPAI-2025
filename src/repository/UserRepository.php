@@ -113,12 +113,12 @@ class UserRepository extends Repository {
             $this->connection->beginTransaction();
 
             $query = $this->connection->prepare('DELETE FROM items WHERE user_id = :user_id');
-            $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+            $query->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 
             $query->execute();
 
             $query = $this->connection->prepare('DELETE FROM users WHERE id = :user_id');
-            $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+            $query->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 
             $query->execute();
 

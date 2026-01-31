@@ -16,6 +16,8 @@ const descriptionInput = document.querySelector('textarea[name="description"]');
 const priceInput = document.querySelector('input[name="price"]');
 const phoneInput = document.querySelector('input[name="phone_number"]');
 const photoInput = document.querySelector('input[name="photo"]');
+const uploadInfo = document.querySelector(".upload-info");
+const filePlaceholder = document.querySelector(".file-placeholder");
 
 const formValidation = document.querySelector(".form-validation");
 
@@ -49,18 +51,47 @@ function validatePhone() {
   }, 300);
 }
 
+function setUploadInfo(message, status) {
+  uploadInfo.textContent = message;
+
+  if (message.length >= 0) {
+    uploadInfo.hidden = false;
+  } else {
+    uploadInfo.hidden = true;
+  }
+
+  if (status) {
+    uploadInfo.classList.add("upload-successful");
+    uploadInfo.classList.remove("upload-bad");
+  } else {
+    uploadInfo.classList.add("upload-bad");
+    uploadInfo.classList.remove("upload-successful");
+  }
+}
+
 function validatePhoto() {
   // photo jest opcjonalne
   const file = photoInput.files && photoInput.files[0];
   if (!file) {
+    setUploadInfo("", false);
     markValidation(photoInput, true);
     return;
   }
 
   const maxBytes = 4 * 1024 * 1024;
 
-  const ok = isAllowedImageType(file) && file.size <= maxBytes;
-  markValidation(photoInput, ok);
+  const isTypeAllowed = isAllowedImageType(file);
+  const isSizeAllowed = file.size <= maxBytes;
+
+  markValidation(photoInput, isTypeAllowed && isSizeAllowed);
+
+  if (!isTypeAllowed) {
+    setUploadInfo("Błąd: zdjęcie musi być w formacie SVG, PNG lub JPG.", false);
+  } else if (!isSizeAllowed) {
+    setUploadInfo("Błąd: zdjęcie jest za duże (max 4MB).", false);
+  } else {
+    setUploadInfo(`Przesłano zdjęcie: ${file.name}`, true);
+  }
 }
 
 function onSubmit(e) {
@@ -115,13 +146,13 @@ function onSubmit(e) {
 
   markValidation(
     titleInput,
-    isNotEmpty(title) && hasMinLength(title, 5) && hasMaxLength(title, 80)
+    isNotEmpty(title) && hasMinLength(title, 5) && hasMaxLength(title, 80),
   );
   markValidation(
     descriptionInput,
     isNotEmpty(description) &&
       hasMinLength(description, 20) &&
-      hasMaxLength(description, 1000)
+      hasMaxLength(description, 1000),
   );
   markValidation(priceInput, isPriceValid(price));
   markValidation(phoneInput, isNotEmpty(phone) && isPhoneValid(phone));

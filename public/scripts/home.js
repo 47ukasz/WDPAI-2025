@@ -25,8 +25,6 @@ function loadData(page = 1) {
   paginationInfo.page = Math.max(1, page);
   spinner.removeAttribute("hidden");
 
-  console.log(paginationInfo.searchTitle);
-
   fetch(
     `http://localhost:8080/search-offers?page=${paginationInfo.page}&pageSize=${paginationInfo.pageSize}&title=${paginationInfo.searchTitle}`,
   )
@@ -37,7 +35,7 @@ function loadData(page = 1) {
       const itemsData = data.items.length > 0 ? data.items : [];
       const total = data.total > 0 ? data.total : 0;
 
-      paginationInfo.page = data.page > 0 ? data.page : paginationInfo.pageSize;
+      paginationInfo.page = data.page > 0 ? data.page : paginationInfo.page;
       paginationInfo.pageSize =
         data.pageSize > 0 ? data.pageSize : paginationInfo.pageSize;
 
@@ -155,7 +153,7 @@ function handleSearchFormSubmit(e) {
   pagination.classList.remove("show");
 }
 
-function handleSynchronizeUrl() {
+function handleSynchronizeAfterLoading() {
   const url = new URL(window.location.href);
 
   let changed = false;
@@ -182,6 +180,16 @@ function handleSynchronizeUrl() {
   }
 }
 
+function handleSynchronizeUrl() {
+  const url = new URL(window.location.href);
+
+  url.searchParams.set("page", paginationInfo.page);
+  url.searchParams.set("pageSize", paginationInfo.pageSize);
+  url.searchParams.set("title", paginationInfo.searchTitle);
+
+  history.replaceState({}, "", url);
+}
+
 prevButton.addEventListener("click", () => {
   if (paginationInfo.page > 1) {
     loadData(paginationInfo.page - 1);
@@ -196,7 +204,7 @@ nextButton.addEventListener("click", () => {
 
 searchForm.addEventListener("submit", handleSearchFormSubmit);
 
-handleSynchronizeUrl();
+handleSynchronizeAfterLoading();
 
 const url = new URL(window.location.href);
 const page = Number(url.searchParams.get("page")) ?? paginationInfo.page;
@@ -208,8 +216,8 @@ paginationInfo.page = page;
 
 paginationInfo.pageSize = pageSize;
 
-if (searchTitle !== "" || searchTitle !== undefined) {
+if (searchTitle !== "" && searchTitle !== undefined && searchTitle !== null) {
   paginationInfo.searchTitle = searchTitle;
 }
 
-loadData();
+loadData(paginationInfo.page);
